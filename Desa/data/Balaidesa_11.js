@@ -1,0 +1,1 @@
+var json_Balaidesa_11 = {"type":"FeatureCollection","name":"Balaidesa_11","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","Nama_Poin":"Balai Desa Situwangi"},"geometry":{"type":"Point","coordinates":[109.512951896,-7.437389074]}}]}

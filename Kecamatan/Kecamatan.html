@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Peta Kecamatan Rakit — WebGIS FarizFikri</title>
+
+<!-- Bootstrap + Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<style>
+/* ===== NAVBAR ===== */
+nav {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: .3s ease-in-out;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0d47a1 !important;
+}
+
+.navbar-nav .nav-link {
+    font-size: 17px;
+    font-weight: 600;
+    padding: 10px 18px;
+    color: #0d47a1 !important;
+    transition: .3s ease;
+    border-radius: 8px;
+}
+
+.navbar-nav .nav-link:hover {
+    background: #e8f2ff;
+    color: #ff8c00 !important;
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    color: #ff8c00 !important;
+    font-weight: 700;
+}
+
+:root { --sidebar-w: 380px; --accent1: #6a11cb; --accent2: #2575fc; }
+html,body { height:100%; margin:0; font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial; }
+nav { background: rgba(255,255,255,0.82); backdrop-filter: blur(8px); border-bottom:1px solid rgba(0,0,0,0.06); }
+/* map occupies area under navbar */
+#map { position:absolute; top:70px; left:0; right:0; bottom:0; z-index:1; }
+
+/* Sidebar */
+.sidebar {
+  position:absolute; top:90px; left:20px; width:var(--sidebar-w); border-radius:16px;
+  background:#fff; box-shadow:0 8px 32px rgba(0,0,0,0.12); z-index:995; overflow:hidden;
+  transition: transform .35s ease;
+}
+.sidebar.collapsed { transform: translateX(calc(-1 * (var(--sidebar-w) + 40px))); }
+.sidebar-header {
+  padding:16px; font-weight:700; color:#fff; background: linear-gradient(135deg,var(--accent1),var(--accent2));
+  display:flex; gap:10px; align-items:center;
+}
+.sidebar-content { max-height: calc(100vh - 180px); overflow:auto; padding:12px 14px; }
+.layer-group-title { font-weight:700; margin:8px 6px 12px; color:#333; display:flex; align-items:center; gap:8px; }
+.layer-item { display:flex; align-items:center; gap:12px; padding:10px; background:#f6f8fb; border-radius:10px; margin-bottom:10px; cursor:pointer; }
+.layer-item:hover { transform: translateX(6px); background:#eef4ff; }
+.layer-item .icon { font-size:20px; width:32px; text-align:center; }
+
+/* Toggle button */
+.toggle-sidebar-btn {
+  position:absolute; top:100px; left: calc(var(--sidebar-w) + 42px); width:44px; height:44px; z-index:996;
+  background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.12); border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:.25s;
+}
+.sidebar.collapsed + .toggle-sidebar-btn { left: 22px; }
+
+/* Search & controls */
+.search-container { position:absolute; top:86px; right:20px; z-index:997; }
+.search-box { width:360px; padding:12px 16px; border-radius:12px; box-shadow:0 8px 22px rgba(0,0,0,0.12); border:none; background:white; }
+.map-controls { position:absolute; right:20px; top:170px; z-index:997; display:flex; flex-direction:column; gap:12px; }
+.control-btn { width:48px; height:48px; border-radius:12px; border:none; background:white; box-shadow:0 8px 20px rgba(0,0,0,0.12); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent2); }
+.control-btn:hover { background:var(--accent2); color:white; transform:translateY(-4px); }
+
+/* Modern Compass */
+.compass {
+  position: absolute;
+  right: 20px;
+  bottom: 80px;
+  width: 95px;
+  height: 95px;
+  z-index: 997;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.compass svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.25));
+}
+
+.compass .label {
+  position: absolute;
+  font-weight: 700;
+  color: #222;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+.compass .N { top: -4px; left: 50%; transform: translateX(-50%); }
+.compass .S { bottom: -4px; left: 50%; transform: translateX(-50%); }
+.compass .E { right: -4px; top: 50%; transform: translateY(-50%); }
+.compass .W { left: -4px; top: 50%; transform: translateY(-50%); }
+
+/* Coordinates box */
+.coords-box { position:absolute; right:20px; bottom:18px; z-index:997; background:white; padding:10px 14px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.12); font-family:monospace; color:#333; }
+
+@media(max-width:768px){
+  .sidebar { left:6px; width:92%; top:86px; }
+  .toggle-sidebar-btn { left: 6px; top: calc(var(--sidebar-w) * 0.01 + 150px); }
+  .search-box { width:240px; right:12px; }
+  .compass { right:12px; top:260px; width:84px; height:84px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg shadow-sm fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="../Beranda.html">WebGIS FarizFikri</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../Beranda.html">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Desa/Desa.html">Peta Desa Situwangi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="Kecamatan.html">Peta Kecamatan Rakit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../Tentang.html">Tentang</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- MAP -->
+<div id="map"></div>
+
+<!-- Modern Compass -->
+<div class="compass" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="34" fill="none" stroke="#2b2b2b" stroke-width="1.4"/>
+    <circle cx="50" cy="50" r="28" fill="none" stroke="#4b4b4b" stroke-width="1"/>
+    <polygon points="50,10 54,50 50,56 46,50" fill="#0c1b3c"/>
+    <polygon points="50,90 54,50 50,44 46,50" fill="#ffffff"/>
+    <circle cx="50" cy="50" r="4" fill="#0c1b3c"/>
+  </svg>
+  <div class="label N">N</div>
+  <div class="label S">S</div>
+  <div class="label E">E</div>
+  <div class="label W">W</div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header"><i class="fas fa-layer-group"></i> &nbsp;Katalog Layer</div>
+  <div class="sidebar-content" id="layerControl">
+    <!-- content inserted by JS -->
+  </div>
+</div>
+
+<button class="toggle-sidebar-btn" id="toggleSidebarBtn" title="Toggle layer"><i class="fas fa-bars"></i></button>
+
+<!-- Search -->
+<div class="search-container"><input id="searchBox" placeholder="Cari lokasi, nama tempat..." class="search-box" /></div>
+
+<!-- Controls -->
+<div class="map-controls" aria-hidden="true">
+  <button class="control-btn" id="btnHome" title="Home"><i class="fas fa-home"></i></button>
+  <button class="control-btn" id="btnZoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
+  <button class="control-btn" id="btnZoomOut" title="Zoom out"><i class="fas fa-minus"></i></button>
+  <button class="control-btn" id="btnLocate" title="Lokasi saya"><i class="fas fa-location-crosshairs"></i></button>
+</div>
+
+<div class="coords-box" id="coords">Lat: - | Lng: -</div>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- GeoJSON data files dari QGIS export -->
+<script src="data/BatasWilayahKecamatanRakit_1.js"></script>
+<script src="data/TiapRumah_2.js"></script>
+<script src="data/PemukimanWarga_3.js"></script>
+<script src="data/Sawah_4.js"></script>
+<script src="data/Ladang_5.js"></script>
+<script src="data/SemakBelukar_6.js"></script>
+<script src="data/Kebun_7.js"></script>
+<script src="data/DusunDesaSituwangi_8.js"></script>
+<script src="data/BatasDesaSatuKecamatan_9.js"></script>
+<script src="data/Sungai_10.js"></script>
+<script src="data/Jalan_11.js"></script>
+<script src="data/TempatWisata_12.js"></script>
+<script src="data/Pemerintahan_13.js"></script>
+<script src="data/Lapangan_14.js"></script>
+<script src="data/Pasar_15.js"></script>
+<script src="data/PomMini_16.js"></script>
+<script src="data/Rumah_17.js"></script>
+<script src="data/Toko_18.js"></script>
+<script src="data/TPQ_19.js"></script>
+<script src="data/LayananKesehatan_20.js"></script>
+<script src="data/Bengkel_21.js"></script>
+<script src="data/Kuburan_22.js"></script>
+<script src="data/TempatIbadah_23.js"></script>
+<script src="data/Sekolahan_24.js"></script>
+<script src="data/RumahSayaFarizFikri_25.js"></script>
+<script src="data/Salon_26.js"></script>
+<script src="data/Umkm_27.js"></script>
+<script src="data/Toponimi_28.js"></script>
+
+<script>
+/* ====== INITIAL MAP ====== */
+const map = L.map('map', { zoomControl:false }).fitBounds([[-7.51644058684191,109.46178558359901],[-7.357267568208576,109.62906783870656]]);
+
+/* Base layers */
+const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom:22, attribution:'© Google' }).addTo(map);
+const googleTerrain = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', { maxZoom:22, attribution:'© Google' });
+
+/* Layer storage */
+const layers = {};
+let allFeatures = [];
+
+/* Styles untuk setiap layer (disesuaikan dengan warna QGIS) */
+const styles = {
+  BatasWilayahKecamatan: { color:'#f40002', weight:4, fillOpacity:0 },
+  TiapRumah: f => {
+    const isDam = f.properties && f.properties['name'] === 'Dam';
+    return { color:'#232323', weight:1, fillColor: isDam ? '#808080' : '#bfb277', fillOpacity:1 };
+  },
+  PemukimanWarga: { color:'#232323', weight:1, fillColor:'#b5915e', fillOpacity:1 },
+  Sawah: { color:'#232323', weight:1, fillColor:'#13cd00', fillOpacity:1 },
+  Ladang: { color:'#232323', weight:1, fillColor:'#3f9237', fillOpacity:1 },
+  SemakBelukar: { color:'#232323', weight:1, fillColor:'#6f8e27', fillOpacity:1 },
+  Kebun: { color:'#232323', weight:1, fillColor:'#159222', fillOpacity:1 },
+  DusunDesaSituwangi: f => {
+    const colors = {
+      'Kalipenggung':'#6fd014', 'Karangpasang':'#a067d5', 'Pelalar':'#81b4ea', 
+      'Semingkir':'#24c979', 'Tuwangi':'#d075a1'
+    };
+    return { color:'#232323', weight:1, fillColor: colors[(f.properties && f.properties['Nama Dusun'])] || '#cfcfcf', fillOpacity:1 };
+  },
+  BatasDesaSatuKecamatan: f => {
+    const colors = {
+      'Adipasir':'#5cde50', 'Badamita':'#51a0d9', 'Bandingan':'#ec1e2f', 
+      'Gelang':'#91d532', 'Kincang':'#ee45a8', 'Lengkong':'#505bd0',
+      'Luwung':'#db45e9', 'Pingit':'#e8df7f', 'Rakit':'#11d462',
+      'Situwangi':'#7be9e0', 'Tanjunganom':'#e67f35'
+    };
+    return { color:'#232323', weight:1, fillColor: colors[(f.properties && f.properties['NAMADS'])] || '#cfcfcf', fillOpacity:1 };
+  },
+  Sungai: { color:'#09b7e9', weight:3, fillOpacity:0 },
+  Jalan: { color:'#bbd6dd', weight:3, fillOpacity:0 }
+};
+
+/* Popup generator */
+function generatePopup(props) {
+  let html = '<div style="min-width:200px;">';
+  for (let k in props) {
+    if (!props.hasOwnProperty(k)) continue;
+    const v = props[k];
+    if (v === null || v === '' || ['full_id','osm_id','osm_type','fid'].includes(k)) continue;
+    html += `<div style="margin-bottom:6px;"><strong>${k}:</strong> ${v}</div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
+/* Add layer helper */
+function addLayerToMap(name, data, style) {
+  if (typeof data === 'undefined') return;
+  const layer = L.geoJSON(data, {
+    style: typeof style === 'function' ? style : () => style,
+    pointToLayer: (f, latlng) => {
+      const iconMap = { 
+        'TempatWisata':'🎡', 'Pemerintahan':'🏛️', 'Lapangan':'⚽', 'Pasar':'🏪',
+        'PomMini':'⛽', 'Rumah':'🏠', 'Toko':'🏪', 'TPQ':'📖', 'LayananKesehatan':'🏥',
+        'Bengkel':'🔧', 'Kuburan':'⚰️', 'TempatIbadah':'🕌', 'Sekolahan':'🏫',
+        'RumahSayaFarizFikri':'🏡', 'Salon':'💇', 'Umkm':'🏭', 'Toponimi':'📍'
+      };
+      const html = `<div style="font-size:20px;text-shadow:0 2px 6px rgba(0,0,0,0.3)">${iconMap[name]||'📍'}</div>`;
+      return L.marker(latlng, { icon: L.divIcon({ html, className:'', iconSize:[28,28], iconAnchor:[14,28] })});
+    },
+    onEachFeature: (feat, layerLeaf) => {
+      if (feat.properties) {
+        layerLeaf.bindPopup(generatePopup(feat.properties));
+        if (feat.geometry && feat.geometry.type !== 'Point') {
+          layerLeaf.on('mouseover', () => layerLeaf.setStyle && layerLeaf.setStyle({ fillOpacity: 0.8, fillColor: '#fff3a8' }));
+          layerLeaf.on('mouseout', () => {
+            const s = typeof style === 'function' ? style(feat) : style;
+            layerLeaf.setStyle && layerLeaf.setStyle(s);
+          });
+        }
+        allFeatures.push({ layer: layerLeaf, properties: feat.properties, layerName: name });
+      }
+    }
+  }).addTo(map);
+  layers[name] = layer;
+}
+
+/* Layer configs */
+const layerConfigs = [
+  { name:'BatasWilayahKecamatan', varName:'json_BatasWilayahKecamatanRakit_1', style:styles.BatasWilayahKecamatan, icon:'🗺️', label:'Batas Kecamatan Rakit' },
+  { name:'TiapRumah', varName:'json_TiapRumah_2', style:styles.TiapRumah, icon:'🏠', label:'Tiap Rumah' },
+  { name:'PemukimanWarga', varName:'json_PemukimanWarga_3', style:styles.PemukimanWarga, icon:'🏘️', label:'Pemukiman Warga' },
+  { name:'Sawah', varName:'json_Sawah_4', style:styles.Sawah, icon:'🌾', label:'Sawah' },
+  { name:'Ladang', varName:'json_Ladang_5', style:styles.Ladang, icon:'🌿', label:'Ladang' },
+  { name:'SemakBelukar', varName:'json_SemakBelukar_6', style:styles.SemakBelukar, icon:'🌳', label:'Semak Belukar' },
+  { name:'Kebun', varName:'json_Kebun_7', style:styles.Kebun, icon:'🌳', label:'Kebun' },
+  { name:'DusunDesaSituwangi', varName:'json_DusunDesaSituwangi_8', style:styles.DusunDesaSituwangi, icon:'🏘️', label:'Dusun Desa Situwangi' },
+  { name:'BatasDesaSatuKecamatan', varName:'json_BatasDesaSatuKecamatan_9', style:styles.BatasDesaSatuKecamatan, icon:'🗺️', label:'Batas Desa' },
+  { name:'Sungai', varName:'json_Sungai_10', style:styles.Sungai, icon:'🌊', label:'Sungai' },
+  { name:'Jalan', varName:'json_Jalan_11', style:styles.Jalan, icon:'🛣️', label:'Jalan' },
+  { name:'TempatWisata', varName:'json_TempatWisata_12', style:null, icon:'🎡', label:'Tempat Wisata' },
+  { name:'Pemerintahan', varName:'json_Pemerintahan_13', style:null, icon:'🏛️', label:'Pemerintahan' },
+  { name:'Lapangan', varName:'json_Lapangan_14', style:null, icon:'⚽', label:'Lapangan' },
+  { name:'Pasar', varName:'json_Pasar_15', style:null, icon:'🏪', label:'Pasar' },
+  { name:'PomMini', varName:'json_PomMini_16', style:null, icon:'⛽', label:'Pom Mini' },
+  { name:'Rumah', varName:'json_Rumah_17', style:null, icon:'🏠', label:'Rumah' },
+  { name:'Toko', varName:'json_Toko_18', style:null, icon:'🏪', label:'Toko' },
+  { name:'TPQ', varName:'json_TPQ_19', style:null, icon:'📖', label:'TPQ' },
+  { name:'LayananKesehatan', varName:'json_LayananKesehatan_20', style:null, icon:'🏥', label:'Layanan Kesehatan' },
+  { name:'Bengkel', varName:'json_Bengkel_21', style:null, icon:'🔧', label:'Bengkel' },
+  { name:'Kuburan', varName:'json_Kuburan_22', style:null, icon:'⚰️', label:'Kuburan' },
+  { name:'TempatIbadah', varName:'json_TempatIbadah_23', style:null, icon:'🕌', label:'Tempat Ibadah' },
+  { name:'Sekolahan', varName:'json_Sekolahan_24', style:null, icon:'🏫', label:'Sekolahan' },
+  { name:'RumahSayaFarizFikri', varName:'json_RumahSayaFarizFikri_25', style:null, icon:'🏡', label:'Rumah Fariz Fikri' },
+  { name:'Salon', varName:'json_Salon_26', style:null, icon:'💇', label:'Salon' },
+  { name:'Umkm', varName:'json_Umkm_27', style:null, icon:'🏭', label:'UMKM' },
+  { name:'Toponimi', varName:'json_Toponimi_28', style:null, icon:'📍', label:'Toponimi' }
+];
+
+/* Build sidebar HTML and load layers */
+const sidebarEl = document.getElementById('layerControl');
+let html = `
+  <div class="layer-group">
+    <div class="layer-group-title"><i class="fas fa-map"></i>&nbsp; Base Map</div>
+    <div class="layer-item" data-base="sat">
+      <input type="radio" name="basemap" id="base-sat" checked />
+      <label for="base-sat" style="margin-left:8px">Google Satellite</label>
+    </div>
+    <div class="layer-item" data-base="ter">
+      <input type="radio" name="basemap" id="base-ter" />
+      <label for="base-ter" style="margin-left:8px">Google Terrain</label>
+    </div>
+  </div>
+  <div class="layer-group"><div class="layer-group-title"><i class="fas fa-layer-group"></i>&nbsp; Layer Peta</div>
+`;
+
+layerConfigs.forEach(cfg => {
+  html += `<div class="layer-item" data-layer="${cfg.name}">
+    <input type="checkbox" class="layer-checkbox" checked style="width:16px;height:16px"/>
+    <div class="icon">${cfg.icon}</div>
+    <div class="flex-grow-1">${cfg.label}</div>
+  </div>`;
+  try {
+    if (typeof window[cfg.varName] !== 'undefined') {
+      addLayerToMap(cfg.name, window[cfg.varName], cfg.style);
+    }
+  } catch (e) {
+    console.warn('error loading layer', cfg.name, e);
+  }
+});
+html += '</div>';
+sidebarEl.innerHTML = html;
+
+/* Wire controls */
+function wireControls() {
+  document.querySelectorAll('.layer-item[data-layer]').forEach(item => {
+    const cb = item.querySelector('.layer-checkbox');
+    const layerName = item.getAttribute('data-layer');
+    if (!layers[layerName]) {
+      cb.addEventListener('change', () => {
+        if (layers[layerName]) cb.checked ? map.addLayer(layers[layerName]) : map.removeLayer(layers[layerName]);
+      });
+    } else {
+      cb.addEventListener('change', () => {
+        cb.checked ? map.addLayer(layers[layerName]) : map.removeLayer(layers[layerName]);
+      });
+    }
+  });
+
+  document.getElementById('base-sat').addEventListener('change', function(){
+    if (this.checked) { map.hasLayer(googleTerrain) && map.removeLayer(googleTerrain); map.addLayer(googleSatellite); }
+  });
+  document.getElementById('base-ter').addEventListener('change', function(){
+    if (this.checked) { map.hasLayer(googleSatellite) && map.removeLayer(googleSatellite); map.addLayer(googleTerrain); }
+  });
+}
+wireControls();
+
+/* Toggle sidebar */
+const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('toggleSidebarBtn');
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
+  setTimeout(()=> map.invalidateSize(), 400);
+});
+
+/* Controls */
+document.getElementById('btnZoomIn').addEventListener('click', ()=> map.zoomIn());
+document.getElementById('btnZoomOut').addEventListener('click', ()=> map.zoomOut());
+document.getElementById('btnHome').addEventListener('click', ()=> map.fitBounds([[-7.51644058684191,109.46178558359901],[-7.357267568208576,109.62906783870656]]));
+document.getElementById('btnLocate').addEventListener('click', ()=> map.locate({ setView:true, maxZoom:16 }));
+
+/* Mouse coords */
+map.on('mousemove', e => {
+  document.getElementById('coords').innerText = `Lat: ${e.latlng.lat.toFixed(5)} | Lng: ${e.latlng.lng.toFixed(5)}`;
+});
+
+map.on('locationfound', e => {
+  L.marker(e.latlng).addTo(map).bindPopup('📍 Anda di sini').openPopup();
+});
+
+/* Search */
+document.getElementById('searchBox').addEventListener('input', function(e) {
+  const term = e.target.value.trim().toLowerCase();
+  if (term.length < 2) return;
+  const matches = allFeatures.filter(it => {
+    return Object.values(it.properties||{}).some(v => String(v).toLowerCase().includes(term));
+  });
+  if (matches.length) {
+    const target = matches[0];
+    const layer = target.layer;
+    if (layer.getBounds) map.fitBounds(layer.getBounds(), { maxZoom:18 });
+    else if (layer.getLatLng) map.setView(layer.getLatLng(), 18);
+    layer.openPopup && layer.openPopup();
+  }
+});
+
+/* Attribution */
+L.control.attribution({ position:'bottomleft', prefix: '<a href="../Beranda.html">Kecamatan Rakit</a> | Leaflet & QGIS' }).addTo(map);
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
