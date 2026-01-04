@@ -1,0 +1,1 @@
+var json_TPQ_8 = {"type":"FeatureCollection","name":"TPQ_8","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_TPQ":"Safira"},"geometry":{"type":"Point","coordinates":[109.519685360624607,-7.439153406671987]}}]}

@@ -1,0 +1,1 @@
+var json_Pasar_18 = {"type":"FeatureCollection","name":"Pasar_18","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NmPasar":"Pasar Centra Rakit City"},"geometry":{"type":"Point","coordinates":[109.523764991605276,-7.439341769912733]}}]}

@@ -1,1 +1,0 @@
-var json_RumahSayaFarizFikri_25 = {"type":"FeatureCollection","name":"RumahSayaFarizFikri_25","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","Nama_Rumah":"MY Home Fariz Fikri","Photo_Ru_1":null},"geometry":{"type":"Point","coordinates":[109.513034117,-7.435987933]}}]}

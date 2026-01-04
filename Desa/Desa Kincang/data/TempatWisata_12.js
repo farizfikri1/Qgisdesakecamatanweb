@@ -1,0 +1,1 @@
+var json_TempatWisata_12 = {"type":"FeatureCollection","name":"TempatWisata_12","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NmWahana":"Bukit Tirta Maya"},"geometry":{"type":"Point","coordinates":[109.558859778541631,-7.414327312025765]}}]}

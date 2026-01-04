@@ -1,0 +1,1 @@
+var json_Bengkel_19 = {"type":"FeatureCollection","name":"Bengkel_19","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_Poin":"UD. Sumber Rejeki Garage"},"geometry":{"type":"Point","coordinates":[109.594237950005294,-7.398233654704559]}}]}

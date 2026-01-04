@@ -1,0 +1,1 @@
+var json_Kecamatan_28 = {"type":"FeatureCollection","name":"Kecamatan_28","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"Nama":"Kecamatan Rakit"},"geometry":{"type":"Point","coordinates":[109.5492241,-7.4168917]}}]}

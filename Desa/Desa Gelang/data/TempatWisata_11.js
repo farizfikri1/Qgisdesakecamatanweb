@@ -1,0 +1,1 @@
+var json_TempatWisata_11 = {"type":"FeatureCollection","name":"TempatWisata_11","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NmWahana":"Wisata Petik Melon (Agrotera 2)"},"geometry":{"type":"Point","coordinates":[109.521274158508461,-7.4350753612099]}}]}

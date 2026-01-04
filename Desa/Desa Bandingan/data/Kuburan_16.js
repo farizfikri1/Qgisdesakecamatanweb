@@ -1,0 +1,1 @@
+var json_Kuburan_16 = {"type":"FeatureCollection","name":"Kuburan_16","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"12","NmKuburan":"Makam Keramat Mbah Jolang"},"geometry":{"type":"Point","coordinates":[109.535245955248655,-7.408845802373683]}}]}

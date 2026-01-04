@@ -1,0 +1,1 @@
+var json_Salon_14 = {"type":"FeatureCollection","name":"Salon_14","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_Salon":"Azka Salon"},"geometry":{"type":"Point","coordinates":[109.584262160030264,-7.411084386187675]}}]}

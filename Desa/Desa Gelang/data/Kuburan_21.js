@@ -1,0 +1,1 @@
+var json_Kuburan_21 = {"type":"FeatureCollection","name":"Kuburan_21","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"13","NmKuburan":"TPU Balairaksa"},"geometry":{"type":"Point","coordinates":[109.521287616036432,-7.430178802693526]}}]}

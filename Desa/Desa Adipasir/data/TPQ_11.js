@@ -1,0 +1,1 @@
+var json_TPQ_11 = {"type":"FeatureCollection","name":"TPQ_11","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_TPQ":"Pondok Pesantren"},"geometry":{"type":"Point","coordinates":[109.544796840247812,-7.422272665713685]}}]}

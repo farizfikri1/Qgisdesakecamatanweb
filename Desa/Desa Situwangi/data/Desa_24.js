@@ -1,0 +1,1 @@
+var json_Desa_24 = {"type":"FeatureCollection","name":"Desa_24","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","Nama":"Desa Situwangi"},"geometry":{"type":"Point","coordinates":[109.512292905220747,-7.436165348254859]}}]}

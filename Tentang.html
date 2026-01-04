@@ -3,233 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang | WebGIS FarizFikri</title>
+    <title>Tentang Regional Satu</title>
+    <link rel="icon" type="image/png" href="images/Banjarnegara.png">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: #f4f7fb;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
             color: #333;
             overflow-x: hidden;
         }
 
-        /* NAVBAR */
+        /* ===== NAVBAR ===== */
         nav {
+            background: rgba(255, 255, 255, 0.98) !important;
             backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.75) !important;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
         }
+
         .navbar-brand {
-            font-size: 22px;
-            font-weight: 700;
-            color: #0d47a1 !important;
-        }
-        .navbar-nav .nav-link {
             font-size: 17px;
-            font-weight: 600;
-            padding: 10px 18px;
-            color: #0d47a1 !important;
-            transition: .3s ease;
-            border-radius: 8px;
+            font-weight: 700;
+            color: #1a5490 !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .nav-link:hover {
-            background: #e8f2ff;
+
+        .navbar-brand img {
+            height: 32px;
+            width: auto;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 15px;
+            font-weight: 600;
+            padding: 8px 16px;
+            color: #1a5490 !important;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 0 4px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background: #e3f2fd;
             color: #ff8c00 !important;
             transform: translateY(-2px);
         }
+
         .nav-link.active {
-            color: #ff8c00 !important;
-            font-weight: 700;
+            background: linear-gradient(135deg, #1a5490, #0d47a1);
+            color: white !important;
         }
 
-        /* HERO SECTION */
-        .hero {
-            margin-top: 90px;
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 60%, #42a5f5 100%);
-            color: white;
+        /* ===== HERO SECTION - FULL SCREEN ===== */
+        .hero-section {
+            background: linear-gradient(135deg, #1a5490 0%, #0d47a1 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            border-radius: 0 0 40px 40px;
             position: relative;
             overflow: hidden;
+            padding: 120px 20px 80px;
         }
 
-        .hero h1 {
-            font-size: 42px;
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-icon i {
+            font-size: 60px;
+            color: white;
+        }
+
+        .hero-section h1 {
+            font-size: 48px;
             font-weight: 800;
-            margin-bottom: 15px;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
         }
 
-        .hero p {
-            font-size: 18px;
+        .hero-section p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 auto 40px;
             line-height: 1.7;
         }
 
-        /* BUBBLE ANIMATION */
-        .bubble {
+        /* Scroll indicator */
+        .scroll-indicator {
             position: absolute;
-            background: rgba(255,255,255,0.25);
-            border-radius: 50%;
-            animation: floatUp 10s infinite ease-in-out;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            opacity: 0.8;
+            animation: bounce 2s infinite;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100px) scale(0.8); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-300px) scale(1.2); opacity: 0; }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
 
-        /* CONTENT BOX */
-        .content-box {
-            max-width: 1000px;
-            margin: 60px auto;
-            padding: 50px;
+        .scroll-indicator i {
+            font-size: 32px;
+        }
+
+        .scroll-indicator span {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0d47a1;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== CONTENT CARD ===== */
+        .content-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            animation: fadeInUp 1.2s ease;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e0e0e0;
         }
 
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(26, 84, 144, 0.15);
+            border-color: #1a5490;
         }
 
-        .content-box h3 {
+        .content-card h3 {
             font-size: 28px;
             font-weight: 700;
             color: #0d47a1;
-            margin-top: 35px;
-            margin-bottom: 18px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
-        .content-box h3 i {
-            font-size: 32px;
+        .content-card h3 i {
             color: #ff8c00;
+            font-size: 32px;
         }
 
-        .content-box p {
+        .content-card p {
             font-size: 17px;
-            line-height: 1.8;
-            margin-bottom: 15px;
+            line-height: 1.9;
+            color: #555;
+            margin-bottom: 20px;
             text-align: justify;
         }
 
-        .content-box ul {
-            padding-left: 25px;
+        .content-card ul {
+            list-style: none;
+            padding: 0;
         }
 
-        .content-box ul li {
-            margin-bottom: 12px;
+        .content-card ul li {
             font-size: 17px;
-            line-height: 1.7;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
         }
 
-        /* INFO CARDS */
-        .info-cards {
+        .content-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* ===== FEATURE GRID ===== */
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
+            gap: 30px;
+            margin: 40px 0;
         }
 
-        .info-card {
-            background: linear-gradient(135deg, #e3f2fd, #f3f9ff);
+        .feature-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 45px rgba(26, 84, 144, 0.2);
+            border-color: #1a5490;
+        }
+
+        .feature-box i {
+            font-size: 50px;
+            color: #1a5490;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-box h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .feature-box p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ===== TECH STACK ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .tech-item {
+            background: linear-gradient(135deg, #1a5490 0%, #0d47a1 100%);
+            color: white;
             padding: 25px;
             border-radius: 15px;
-            border-left: 5px solid #0d47a1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(26, 84, 144, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .info-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(13,71,161,0.15);
+        .tech-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 10px 35px rgba(26, 84, 144, 0.5);
         }
 
-        .info-card h4 {
+        .tech-item i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .tech-item span {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a5490, #0d47a1);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 5px 20px rgba(26, 84, 144, 0.3);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h4 {
             font-size: 20px;
             font-weight: 700;
             color: #0d47a1;
             margin-bottom: 10px;
         }
 
-        .info-card p {
+        .timeline-content p {
             font-size: 16px;
+            color: #666;
+            line-height: 1.7;
             margin: 0;
-            text-align: left;
         }
 
-        /* TECH STACK */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 25px 0;
+        /* ===== STATS ROW ===== */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
         }
 
-        .tech-badge {
-            background: #0d47a1;
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
             transition: all 0.3s ease;
         }
 
-        .tech-badge:hover {
-            background: #ff8c00;
-            transform: scale(1.08);
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.5);
         }
 
-        /* CONTACT SECTION */
+        .stat-card i {
+            font-size: 45px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .stat-card h5 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        /* ===== CONTACT SECTION ===== */
         .contact-section {
-            background: linear-gradient(135deg, #f3f9ff, #e3f2fd);
-            padding: 35px;
+            background: linear-gradient(135deg, #1a5490 0%, #0d47a1 100%);
+            padding: 60px;
+            border-radius: 25px;
+            margin-top: 60px;
+            box-shadow: 0 15px 50px rgba(26, 84, 144, 0.3);
+        }
+
+        .contact-section h3 {
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .contact-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             border-radius: 15px;
-            margin-top: 30px;
-        }
-
-        .contact-section h4 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0d47a1;
-            margin-bottom: 20px;
-        }
-
-        .contact-item {
+            padding: 30px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 17px;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        .contact-item i {
-            font-size: 24px;
-            color: #ff8c00;
-            width: 35px;
+        .contact-box:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(10px);
         }
 
-        /* FOOTER */
-        footer {
-            background: linear-gradient(135deg, #0d47a1, #1976d2);
+        .contact-box i {
+            font-size: 32px;
             color: white;
-            padding: 50px 0;
-            margin-top: 80px;
-            border-radius: 30px 30px 0 0;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-info {
+            color: white;
+        }
+
+        .contact-info strong {
+            display: block;
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-info span {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, #0d47a1 0%, #1976d2 100%);
+            color: white;
+            padding: 50px 20px;
             text-align: center;
+            margin-top: 100px;
         }
 
         footer p {
@@ -237,208 +507,455 @@
             font-size: 16px;
         }
 
-        /* RESPONSIVE */
+        footer .copyright {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 15px;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 32px; }
-            .hero p { font-size: 16px; }
-            .content-box { padding: 30px 20px; }
-            .content-box h3 { font-size: 24px; }
+            .hero-section {
+                min-height: 100vh;
+                padding: 100px 20px 60px;
+            }
+
+            .hero-section h1 {
+                font-size: 32px;
+            }
+
+            .hero-section p {
+                font-size: 16px;
+            }
+
+            .hero-icon {
+                width: 90px;
+                height: 90px;
+            }
+
+            .hero-icon i {
+                font-size: 45px;
+            }
+
+            .scroll-indicator {
+                bottom: 30px;
+            }
+
+            .scroll-indicator i {
+                font-size: 24px;
+            }
+
+            .scroll-indicator span {
+                font-size: 12px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .content-card {
+                padding: 30px 25px;
+            }
+
+            .content-card h3 {
+                font-size: 22px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-item {
+                gap: 15px;
+            }
+
+            .timeline-number {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .contact-section {
+                padding: 40px 25px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar-brand {
+                font-size: 15px;
+            }
+
+            .navbar-brand img {
+                height: 28px;
+            }
+        }
+
+        /* ===== SMOOTH ANIMATIONS ===== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg shadow-sm fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">WebGIS FarizFikri</a>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/Banjarnegara.png" alt="Logo" onerror="this.style.display='none'">
+                <span>Peta Regional Satu</span>
+            </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Beranda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Desa/Desa.html">Peta Desa Situwangi</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Kecamatan/Kecamatan.html">Peta Kecamatan Rakit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="Tentang.html">Tentang</a>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Desa/Desa Situwangi/Situwangi.html">Peta Desa Situwangi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Kecamatan/Kecamatan.html">Peta Kecamatan Rakit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Tentang.html">Tentang</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<!-- HERO SECTION -->
-<div class="hero animate__animated animate__fadeIn">
-    <!-- BUBBLE ANIMATIONS -->
-    <div class="bubble" style="width:90px; height:90px; left:15%; animation-delay:0s;"></div>
-    <div class="bubble" style="width:120px; height:120px; left:70%; animation-delay:2s;"></div>
-    <div class="bubble" style="width:60px; height:60px; left:50%; animation-delay:4s;"></div>
-    <div class="bubble" style="width:80px; height:80px; left:30%; animation-delay:3s;"></div>
-    <div class="bubble" style="width:100px; height:100px; left:85%; animation-delay:1s;"></div>
-
-    <h1 class="animate__animated animate__fadeInDown">Tentang WebGIS FarizFikri</h1>
-    <p class="animate__animated animate__fadeInUp animate__delay-1s">
-        Portal Sistem Informasi Geografis berbasis web yang menyajikan data spasial lengkap 
-        tentang Desa Situwangi dan Kecamatan Rakit, Kabupaten Banjarnegara, Jawa Tengah. 
-        Dikembangkan dengan teknologi modern untuk mendukung perencanaan wilayah dan pengambilan keputusan berbasis data.
-    </p>
-</div>
-
-<!-- CONTENT SECTION -->
-<div class="content-box">
-    <h3><i class="fas fa-map-marked-alt"></i> Apa itu WebGIS FarizFikri?</h3>
-    <p>
-        WebGIS FarizFikri adalah platform Sistem Informasi Geografis (SIG) berbasis web yang dirancang 
-        untuk menyajikan informasi spasial secara interaktif dan mudah diakses. Platform ini menampilkan 
-        peta digital yang mencakup berbagai layer informasi seperti batas administrasi, jaringan jalan, 
-        penggunaan lahan, fasilitas umum (sekolah, tempat ibadah, kesehatan), serta data toponimi wilayah 
-        Desa Situwangi dan Kecamatan Rakit.
-    </p>
-    <p>
-        Dengan antarmuka yang user-friendly dan dilengkapi fitur pencarian, zoom, serta toggle layer, 
-        pengguna dapat mengeksplorasi informasi geografis dengan mudah tanpa memerlukan keahlian teknis 
-        yang mendalam di bidang pemetaan.
-    </p>
-
-    <h3><i class="fas fa-bullseye"></i> Tujuan Pengembangan</h3>
-    <div class="info-cards">
-        <div class="info-card">
-            <h4><i class="fas fa-users"></i> Pelayanan Publik</h4>
-            <p>Mempermudah masyarakat dalam mengakses informasi geografis dan potensi wilayah secara real-time.</p>
+    <!-- HERO SECTION - FULL SCREEN -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <h1>Tentang WebGIS</h1>
+            <p>Mengenal lebih dekat sistem informasi geografis berbasis web untuk Desa Situwangi dan Kecamatan Rakit, Kabupaten Banjarnegara</p>
         </div>
-        <div class="info-card">
-            <h4><i class="fas fa-chart-line"></i> Perencanaan Pembangunan</h4>
-            <p>Mendukung pemerintah desa dalam perencanaan pembangunan berbasis data spasial yang akurat.</p>
+        
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fas fa-chevron-down"></i>
         </div>
-        <div class="info-card">
-            <h4><i class="fas fa-graduation-cap"></i> Pendidikan & Riset</h4>
-            <p>Menyediakan data geospasial untuk keperluan akademis, penelitian, dan pembelajaran mahasiswa.</p>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="main-content">
+        <div class="container">
+            
+            <!-- APA ITU WEBGIS -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-map-marked-alt"></i> Apa itu WebGIS Peta Regional Satu?</h3>
+                <p>
+                    WebGIS Peta Regional Satu adalah platform Sistem Informasi Geografis (SIG) berbasis web yang dirancang 
+                    untuk menyajikan informasi spasial secara interaktif dan mudah diakses. Platform ini menampilkan 
+                    peta digital yang mencakup berbagai layer informasi seperti batas administrasi, jaringan jalan, 
+                    penggunaan lahan, fasilitas umum (sekolah, tempat ibadah, kesehatan), serta data toponimi wilayah 
+                    Desa Situwangi dan Kecamatan Rakit, Kabupaten Banjarnegara, Jawa Tengah.
+                </p>
+                <p>
+                    Dengan antarmuka yang user-friendly dan dilengkapi fitur pencarian, zoom, serta toggle layer, 
+                    pengguna dapat mengeksplorasi informasi geografis dengan mudah tanpa memerlukan keahlian teknis 
+                    yang mendalam di bidang pemetaan. Dikembangkan dengan teknologi modern untuk mendukung perencanaan wilayah dan pengambilan keputusan berbasis data.
+                </p>
+            </div>
+
+            <!-- TUJUAN PENGEMBANGAN -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-bullseye"></i> Tujuan Pengembangan</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <i class="fas fa-users"></i>
+                        <h4>Pelayanan Publik</h4>
+                        <p>Mempermudah masyarakat mengakses informasi geografis dan potensi wilayah secara real-time</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Perencanaan Pembangunan</h4>
+                        <p>Mendukung pemerintah dalam perencanaan berbasis data spasial yang akurat</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h4>Pendidikan & Riset</h4>
+                        <p>Menyediakan data geospasial untuk keperluan akademis dan penelitian</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-database"></i>
+                        <h4>Satu Data</h4>
+                        <p>Implementasi "Satu Peta, Satu Data, Satu Informasi" sesuai kebijakan nasional</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Disaster Management</h4>
+                        <p>Mendukung mitigasi bencana dengan pemetaan zona rawan dan jalur evakuasi</p>
+                    </div>
+                    <div class="feature-box">
+                        <i class="fas fa-globe-asia"></i>
+                        <h4>Promosi Wilayah</h4>
+                        <p>Menampilkan potensi ekonomi dan pariwisata kepada investor dan wisatawan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FITUR UTAMA -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-layer-group"></i> Fitur Utama WebGIS</h3>
+                <ul>
+                    <li><strong>Peta Interaktif:</strong> Zoom in/out, pan, dan navigasi peta yang smooth dengan kontrol yang mudah digunakan</li>
+                    <li><strong>Multi-Layer System:</strong> Lebih dari 25+ layer berbeda yang dapat ditampilkan/disembunyikan sesuai kebutuhan</li>
+                    <li><strong>Pencarian Lokasi:</strong> Fitur search untuk menemukan tempat, jalan, atau fasilitas dengan cepat</li>
+                    <li><strong>Pop-up Informasi:</strong> Klik pada objek di peta untuk melihat detail informasi lengkap</li>
+                    <li><strong>Base Map Options:</strong> Pilihan peta dasar antara Google Satellite dan Google Terrain</li>
+                    <li><strong>Responsive Design:</strong> Tampilan optimal di berbagai perangkat (desktop, tablet, smartphone)</li>
+                    <li><strong>Kompas Digital:</strong> Indikator arah mata angin untuk orientasi peta</li>
+                    <li><strong>Koordinat Real-time:</strong> Menampilkan latitude dan longitude saat mouse bergerak di peta</li>
+                    <li><strong>Geolokasi:</strong> Fitur "Lokasi Saya" untuk menemukan posisi pengguna saat ini</li>
+                </ul>
+            </div>
+
+            <!-- CAKUPAN WILAYAH -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-map"></i> Cakupan Wilayah</h3>
+                
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h5>Desa</h5>
+                        <div class="number">5</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-home"></i>
+                        <h5>Dusun</h5>
+                        <div class="number">5</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-layer-group"></i>
+                        <h5>Total Layer</h5>
+                        <div class="number">25+</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-building"></i>
+                        <h5>Fasilitas</h5>
+                        <div class="number">50+</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px;">
+                    <strong>Desa Situwangi</strong> - Mencakup 5 dusun: Kalipenggung, Karangpasang, Pelalar, Semingkir, dan Tuwangi. 
+                    Peta menampilkan detail batas dusun, pemukiman, lahan pertanian (sawah, ladang, kebun), serta seluruh fasilitas 
+                    umum yang ada di wilayah desa.
+                </p>
+                <p>
+                    <strong>Kecamatan Rakit</strong> - Meliputi 11 desa: Adipasir, Badamita, Bandingan, Gelang, Kincang, Lengkong, 
+                    Luwung, Pingit, Rakit, Situwangi, dan Tanjunganom. Peta menampilkan batas administratif antar desa, jaringan 
+                    jalan utama, sungai, serta distribusi fasilitas umum di tingkat kecamatan.
+                </p>
+            </div>
+
+            <!-- TEKNOLOGI -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-tools"></i> Teknologi yang Digunakan</h3>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <i class="fas fa-map"></i>
+                        <span>QGIS 3.x</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-html5"></i>
+                        <span>HTML5</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-css3-alt"></i>
+                        <span>CSS3</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-js"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-leaf"></i>
+                        <span>Leaflet.js</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-bootstrap"></i>
+                        <span>Bootstrap 5</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-map-marked"></i>
+                        <span>QGIS2Web</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-google"></i>
+                        <span>Google Maps API</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LANDASAN HUKUM -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-balance-scale"></i> Landasan Hukum</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-number">1</div>
+                        <div class="timeline-content">
+                            <h4>UU No. 4 Tahun 2011</h4>
+                            <p>Tentang Informasi Geospasial - Mengatur penyelenggaraan informasi geospasial di Indonesia</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">2</div>
+                        <div class="timeline-content">
+                            <h4>Perpres No. 9 Tahun 2019</h4>
+                            <p>Tentang Percepatan Pelaksanaan Kebijakan Satu Peta pada Tingkat Ketelitian Peta Skala 1:50.000</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">3</div>
+                        <div class="timeline-content">
+                            <h4>Peraturan BIG No. 3 Tahun 2016</h4>
+                            <p>Tentang Spesifikasi Teknis Penyajian Peta Desa</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">4</div>
+                        <div class="timeline-content">
+                            <h4>Permendagri No. 45 Tahun 2016</h4>
+                            <p>Tentang Pedoman Penetapan dan Penegasan Batas Desa</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-number">5</div>
+                        <div class="timeline-content">
+                            <h4>Perpres No. 27 Tahun 2014</h4>
+                            <p>Tentang Jaringan Informasi Geospasial Nasional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFIL PENGEMBANG -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-user-tie"></i> Profil Pengembang</h3>
+                <p>
+                    WebGIS Peta Regional Satu dikembangkan oleh <strong>Fariz Fikri</strong>, seorang GIS Developer dan Spatial Analyst 
+                    yang memiliki keahlian dalam pengolahan data geospasial, pemetaan digital, dan pengembangan aplikasi berbasis web. 
+                    Dengan fokus pada inovasi teknologi informasi geografis, pengembang berkomitmen untuk menyediakan solusi pemetaan 
+                    yang akurat, interaktif, dan mudah diakses oleh berbagai kalangan.
+                </p>
+                <p>
+                    Pengalaman dalam bidang GIS meliputi analisis spasial, visualisasi data geografis, serta pengembangan sistem informasi 
+                    berbasis lokasi untuk mendukung perencanaan wilayah dan pengambilan keputusan strategis. Platform ini merupakan hasil 
+                    dari dedikasi dalam menghadirkan teknologi geospasial yang dapat memberikan manfaat nyata bagi masyarakat, pemerintah, 
+                    dan dunia pendidikan.
+                </p>
+            </div>
+
+            <!-- MANFAAT WEBGIS -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-lightbulb"></i> Manfaat WebGIS</h3>
+                <ul>
+                    <li><strong>Transparansi Data:</strong> Memberikan akses terbuka terhadap informasi geografis kepada publik</li>
+                    <li><strong>Efisiensi Administrasi:</strong> Memudahkan pencarian dan dokumentasi data wilayah secara digital</li>
+                    <li><strong>Pengambilan Keputusan:</strong> Menyediakan data spasial untuk analisis dan perencanaan strategis</li>
+                    <li><strong>Promosi Daerah:</strong> Menampilkan potensi dan fasilitas wilayah kepada investor dan wisatawan</li>
+                    <li><strong>Disaster Management:</strong> Mendukung mitigasi bencana dengan peta jalur evakuasi dan zona rawan</li>
+                    <li><strong>Pembelajaran Digital:</strong> Media edukasi tentang geografi dan pemetaan digital</li>
+                </ul>
+            </div>
+
+            <!-- PENGEMBANGAN MASA DEPAN -->
+            <div class="content-card fade-in">
+                <h3><i class="fas fa-rocket"></i> Roadmap Pengembangan</h3>
+                <p>
+                    Kami terus berinovasi untuk menghadirkan fitur-fitur terbaru yang meningkatkan fungsionalitas dan pengalaman pengguna:
+                </p>
+                <ul>
+                    <li><strong>Real-time Data Integration:</strong> Integrasi sensor IoT untuk monitoring lingkungan secara real-time</li>
+                    <li><strong>Advanced Spatial Analysis:</strong> Fitur analisis buffer zone, overlay analysis, dan heatmap</li>
+                    <li><strong>Dashboard Analytics:</strong> Statistik demografi dan ekonomi berbasis peta yang interaktif</li>
+                    <li><strong>Community Reporting:</strong> Sistem pelaporan masalah wilayah oleh masyarakat (crowd-sourcing)</li>
+                    <li><strong>Data Export:</strong> Kemampuan export dalam format shapefile, GeoJSON, dan KML</li>
+                    <li><strong>Mobile Application:</strong> Aplikasi mobile untuk akses lebih mudah di lapangan</li>
+                </ul>
+            </div>
+
+            <!-- CONTACT SECTION -->
+            <div class="contact-section">
+                <h3><i class="fas fa-address-book"></i> Hubungi Kami</h3>
+                <div class="contact-grid">
+                    <div class="contact-box">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-info">
+                            <strong>Email</strong>
+                            <span style="word-break: break-all;">farizfikri.webgis@gmail.com</span>
+                        </div>
+                    </div>
+                    <div class="contact-box">
+                        <i class="fab fa-instagram"></i>
+                        <div class="contact-info">
+                            <strong>Instagram</strong>
+                            <span>@webgis_farizfikri</span>
+                        </div>
+                    </div>
+                    <div class="contact-box">
+                        <i class="fab fa-github"></i>
+                        <div class="contact-info">
+                            <strong>GitHub</strong>
+                            <span style="word-break: break-all;">github.com/farizfikri1</span>
+                        </div>
+                    </div>
+                    <div class="contact-box">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-info">
+                            <strong>Lokasi</strong>
+                            <span>Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="info-card">
-            <h4><i class="fas fa-database"></i> Satu Data</h4>
-            <p>Mengimplementasikan konsep "Satu Peta, Satu Data, Satu Informasi" sesuai kebijakan nasional.</p>
-        </div>
-    </div>
+    </section>
 
-    <h3><i class="fas fa-layer-group"></i> Fitur Utama WebGIS</h3>
-    <ul>
-        <li><strong>Peta Interaktif:</strong> Zoom in/out, pan, dan navigasi peta yang smooth dengan kontrol yang mudah digunakan</li>
-        <li><strong>Multi-Layer System:</strong> Lebih dari 25+ layer berbeda yang dapat ditampilkan/disembunyikan sesuai kebutuhan</li>
-        <li><strong>Pencarian Lokasi:</strong> Fitur search untuk menemukan tempat, jalan, atau fasilitas dengan cepat</li>
-        <li><strong>Pop-up Informasi:</strong> Klik pada objek di peta untuk melihat detail informasi lengkap</li>
-        <li><strong>Base Map Options:</strong> Pilihan peta dasar antara Google Satellite dan Google Terrain</li>
-        <li><strong>Responsive Design:</strong> Tampilan optimal di berbagai perangkat (desktop, tablet, smartphone)</li>
-        <li><strong>Kompas Digital:</strong> Indikator arah mata angin untuk orientasi peta</li>
-        <li><strong>Koordinat Real-time:</strong> Menampilkan latitude dan longitude saat mouse bergerak di peta</li>
-        <li><strong>Geolokasi:</strong> Fitur "Lokasi Saya" untuk menemukan posisi pengguna saat ini</li>
-    </ul>
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>WebGIS Peta Regional Satu</strong></p>
+        <p>Desa Situwangi & Kecamatan Rakit | Kabupaten Banjarnegara, Jawa Tengah</p>
+        <p class="copyright">© 2025 Developed by FarizFikri | Professional GIS Solutions</p>
+    </footer>
 
-    <h3><i class="fas fa-map"></i> Cakupan Wilayah</h3>
-    <p>
-        <strong>Desa Situwangi</strong> - Mencakup 5 dusun: Kalipenggung, Karangpasang, Pelalar, Semingkir, dan Tuwangi. 
-        Peta menampilkan detail batas dusun, pemukiman, lahan pertanian (sawah, ladang, kebun), serta seluruh fasilitas 
-        umum yang ada di wilayah desa.
-    </p>
-    <p>
-        <strong>Kecamatan Rakit</strong> - Meliputi 11 desa: Adipasir, Badamita, Bandingan, Gelang, Kincang, Lengkong, 
-        Luwung, Pingit, Rakit, Situwangi, dan Tanjunganom. Peta menampilkan batas administratif antar desa, jaringan 
-        jalan utama, sungai, serta distribusi fasilitas umum di tingkat kecamatan.
-    </p>
-
-    <h3><i class="fas fa-tools"></i> Teknologi yang Digunakan</h3>
-    <div class="tech-stack">
-        <div class="tech-badge"><i class="fas fa-map"></i> QGIS 3.x</div>
-        <div class="tech-badge"><i class="fab fa-html5"></i> HTML5</div>
-        <div class="tech-badge"><i class="fab fa-css3-alt"></i> CSS3</div>
-        <div class="tech-badge"><i class="fab fa-js"></i> JavaScript</div>
-        <div class="tech-badge"><i class="fas fa-leaf"></i> Leaflet.js</div>
-        <div class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap 5</div>
-        <div class="tech-badge"><i class="fas fa-map-marked"></i> QGIS2Web Plugin</div>
-        <div class="tech-badge"><i class="fab fa-google"></i> Google Maps API</div>
-    </div>
-
-    <h3><i class="fas fa-balance-scale"></i> Landasan Hukum</h3>
-    <ul>
-        <li><strong>UU No. 4 Tahun 2011</strong> tentang Informasi Geospasial - Mengatur penyelenggaraan informasi geospasial di Indonesia</li>
-        <li><strong>Perpres No. 9 Tahun 2019</strong> tentang Percepatan Pelaksanaan Kebijakan Satu Peta pada Tingkat Ketelitian Peta Skala 1:50.000</li>
-        <li><strong>Peraturan BIG No. 3 Tahun 2016</strong> tentang Spesifikasi Teknis Penyajian Peta Desa</li>
-        <li><strong>Permendagri No. 45 Tahun 2016</strong> tentang Pedoman Penetapan dan Penegasan Batas Desa</li>
-        <li><strong>Perpres No. 27 Tahun 2014</strong> tentang Jaringan Informasi Geospasial Nasional</li>
-    </ul>
-
-    <h3><i class="fas fa-user-graduate"></i> Profil Pengembang</h3>
-    <p>
-        WebGIS ini dikembangkan oleh <strong>Fariz Fikri</strong>, mahasiswa Program Studi Sistem Informasi 
-        sebagai bagian dari tugas mata kuliah Sistem Informasi Geografis (GIS). Proyek ini merupakan implementasi 
-        praktis dari konsep-konsep GIS yang telah dipelajari, dengan fokus pada pengolahan data spasial, 
-        analisis geografi, dan publikasi peta digital berbasis web.
-    </p>
-
-    <h3><i class="fas fa-lightbulb"></i> Manfaat WebGIS</h3>
-    <ul>
-        <li><strong>Transparansi Data:</strong> Memberikan akses terbuka terhadap informasi geografis kepada publik</li>
-        <li><strong>Efisiensi Administrasi:</strong> Memudahkan pencarian dan dokumentasi data wilayah</li>
-        <li><strong>Pengambilan Keputusan:</strong> Menyediakan data spasial untuk analisis dan perencanaan strategis</li>
-        <li><strong>Promosi Daerah:</strong> Menampilkan potensi dan fasilitas wilayah kepada investor dan wisatawan</li>
-        <li><strong>Disaster Management:</strong> Mendukung mitigasi bencana dengan peta jalur evakuasi dan zona rawan</li>
-        <li><strong>Pembelajaran Digital:</strong> Media edukasi tentang geografi dan pemetaan digital bagi pelajar</li>
-    </ul>
-
-    <h3><i class="fas fa-road"></i> Pengembangan Masa Depan</h3>
-    <p>
-        Ke depannya, WebGIS ini akan terus dikembangkan dengan penambahan fitur-fitur seperti:
-    </p>
-    <ul>
-        <li>Integrasi data real-time dari sensor IoT untuk monitoring lingkungan</li>
-        <li>Fitur analisis spasial (buffer zone, overlay analysis, heatmap)</li>
-        <li>Dashboard statistik demografi dan ekonomi berbasis peta</li>
-        <li>Sistem pelaporan masalah wilayah oleh masyarakat (crowd-sourcing)</li>
-        <li>Export data dalam format shapefile, GeoJSON, dan KML</li>
-        <li>Aplikasi mobile untuk akses lebih mudah di lapangan</li>
-    </ul>
-
-    <!-- CONTACT SECTION -->
-    <div class="contact-section">
-        <h4><i class="fas fa-address-book"></i> Informasi Kontak</h4>
-        <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <span><strong>Email:</strong> farizfikri.webgis@gmail.com</span>
-        </div>
-        <div class="contact-item">
-            <i class="fab fa-instagram"></i>
-            <span><strong>Instagram:</strong> @webgis_farizfikri</span>
-        </div>
-        <div class="contact-item">
-            <i class="fab fa-github"></i>
-            <span><strong>GitHub:</strong> github.com/farizfikri1</span>
-        </div>
-        <div class="contact-item">
-            <i class="fas fa-map-marker-alt"></i>
-            <span><strong>Lokasi:</strong> Indonesia </span>
-        </div>
-    </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-    <p style="font-size: 18px; font-weight: 600;"><i class="fas fa-copyright"></i> 2025 WebGIS FarizFikri</p>
-    <p>Dibuat untuk Tugas Mata Kuliah Sistem Informasi Geografis (GIS)</p>
-    <p>Program Studi Sistem Informasi</p>
-    <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
-        <i class="fas fa-code"></i> Developed with QGIS, Leaflet.js & Bootstrap
-    </p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

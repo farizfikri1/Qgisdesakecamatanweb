@@ -1,0 +1,1 @@
+var json_Pemerintahan_7 = {"type":"FeatureCollection","name":"Pemerintahan_7","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"name":"Kantor Kelurahan Adipasir"},"geometry":{"type":"Point","coordinates":[109.540815633022106,-7.430466017898008]}}]}

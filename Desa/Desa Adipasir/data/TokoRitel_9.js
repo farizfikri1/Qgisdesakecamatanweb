@@ -1,0 +1,1 @@
+var json_TokoRitel_9 = {"type":"FeatureCollection","name":"TokoRitel_9","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","Nama":"Alfamart"},"geometry":{"type":"Point","coordinates":[109.539128525427401,-7.431506258727494]}}]}

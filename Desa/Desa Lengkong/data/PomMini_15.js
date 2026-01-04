@@ -1,0 +1,1 @@
+var json_PomMini_15 = {"type":"FeatureCollection","name":"PomMini_15","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NmPomMini":"Pertamini Pak Jahid"},"geometry":{"type":"Point","coordinates":[109.578244786933766,-7.39671590201288]}}]}

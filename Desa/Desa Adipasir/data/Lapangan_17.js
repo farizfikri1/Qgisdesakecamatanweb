@@ -1,0 +1,1 @@
+var json_Lapangan_17 = {"type":"FeatureCollection","name":"Lapangan_17","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NamaLapang":"Lapangan Desa Adipasir"},"geometry":{"type":"Point","coordinates":[109.546892205605189,-7.426173216979216]}}]}

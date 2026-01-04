@@ -1,0 +1,1 @@
+var json_TPQ_9 = {"type":"FeatureCollection","name":"TPQ_9","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_TPQ":"Al-Hidayatul Islamiyah"},"geometry":{"type":"Point","coordinates":[109.569980947936415,-7.408396975008805]}}]}

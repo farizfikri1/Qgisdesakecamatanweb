@@ -1,0 +1,1 @@
+var json_PomMini_16 = {"type":"FeatureCollection","name":"PomMini_16","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NmPomMini":"Mobil Indostation Gelang"},"geometry":{"type":"Point","coordinates":[109.519242571106389,-7.44171974680925]}}]}

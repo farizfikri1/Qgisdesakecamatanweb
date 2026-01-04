@@ -1,0 +1,1 @@
+var json_Pemerintahan_27 = {"type":"FeatureCollection","name":"Pemerintahan_27","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"2","Baldes":"Balai Desa"},"geometry":{"type":"Point","coordinates":[109.558778895326554,-7.397368339256249]}}]}

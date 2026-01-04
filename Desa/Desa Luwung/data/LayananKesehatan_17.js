@@ -1,0 +1,1 @@
+var json_LayananKesehatan_17 = {"type":"FeatureCollection","name":"LayananKesehatan_17","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_poin":"Bidan Yuli Puriwati"},"geometry":{"type":"Point","coordinates":[109.589869257398945,-7.396390423199855]}}]}

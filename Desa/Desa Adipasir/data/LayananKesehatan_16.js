@@ -1,0 +1,1 @@
+var json_LayananKesehatan_16 = {"type":"FeatureCollection","name":"LayananKesehatan_16","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"Nama_poin":"Apotek Adipasir"},"geometry":{"type":"Point","coordinates":[109.539066250988469,-7.431555441639973]}}]}

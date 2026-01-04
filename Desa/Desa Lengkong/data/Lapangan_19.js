@@ -1,0 +1,1 @@
+var json_Lapangan_19 = {"type":"FeatureCollection","name":"Lapangan_19","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":null,"NamaLapang":"Lapangan Desa Lengkong"},"geometry":{"type":"Point","coordinates":[109.577703495224753,-7.394426754706028]}}]}
