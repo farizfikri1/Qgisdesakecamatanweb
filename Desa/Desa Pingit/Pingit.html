@@ -59,7 +59,6 @@ nav {
     font-weight: 700;
 }
 
-/* Dropdown styling */
 .dropdown-menu {
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
@@ -89,7 +88,6 @@ nav {
     font-weight: 700;
 }
 
-/* ===== MAP & LAYOUT ===== */
 :root { 
     --sidebar-w: 380px; 
     --accent1: #1a5490; 
@@ -111,12 +109,12 @@ html, body {
     z-index: 1; 
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
     position: absolute; 
     top: 88px; 
     left: 20px; 
     width: var(--sidebar-w); 
+    max-height: calc(100vh - 120px);
     border-radius: 16px;
     background: #fff; 
     box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
@@ -141,8 +139,8 @@ html, body {
 }
 
 .sidebar-content { 
-    max-height: calc(100vh - 180px); 
-    overflow: auto; 
+    max-height: calc(100vh - 220px); 
+    overflow-y: auto; 
     padding: 12px 14px; 
 }
 
@@ -192,9 +190,9 @@ html, body {
     font-size: 14px; 
     cursor: pointer; 
     margin: 0; 
+    flex: 1;
 }
 
-/* ===== TOGGLE BUTTON ===== */
 .toggle-sidebar-btn {
     position: absolute; 
     top: 98px; 
@@ -224,7 +222,6 @@ html, body {
     left: 22px; 
 }
 
-/* ===== SEARCH ===== */
 .search-container { 
     position: absolute; 
     top: 84px; 
@@ -288,7 +285,6 @@ html, body {
     margin-right: 8px; 
 }
 
-/* ===== MAP CONTROLS ===== */
 .map-controls { 
     position: absolute; 
     right: 20px; 
@@ -321,7 +317,6 @@ html, body {
     transform: translateY(-3px); 
 }
 
-/* ===== COMPASS ===== */
 .compass {
     position: absolute;
     right: 20px;
@@ -352,7 +347,6 @@ html, body {
 .compass .E { right: -4px; top: 50%; transform: translateY(-50%); }
 .compass .W { left: -4px; top: 50%; transform: translateY(-50%); }
 
-/* ===== COORDINATES BOX ===== */
 .coords-box { 
     position: absolute; 
     right: 20px; 
@@ -367,7 +361,6 @@ html, body {
     font-size: 13px; 
 }
 
-/* ===== CUSTOM POPUP ===== */
 .custom-popup .leaflet-popup-content-wrapper {
     border-radius: 12px;
     padding: 0;
@@ -384,7 +377,6 @@ html, body {
     background: white;
 }
 
-/* ====== CUSTOM MARKER ICON ===== */
 .custom-marker-icon {
     background: transparent !important;
     border: none !important;
@@ -393,20 +385,68 @@ html, body {
     justify-content: center;
 }
 
-.leaflet-marker-icon .leaflet-tooltip {
-    display: none !important;
-}
-
-.leaflet-marker-pane img {
-    pointer-events: none;
-}
-
 .leaflet-div-icon {
     background: transparent !important;
     border: none !important;
 }
 
-/* ===== RESPONSIVE ===== */
+/* LABEL POIN SEPERTI GOOGLE MAPS */
+.point-label {
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.2) !important;
+    font-family: 'Roboto', Arial, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #1a1a1a !important;
+    padding: 3px 7px !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+    letter-spacing: 0.3px !important;
+}
+
+.point-label::before,
+.point-label::after {
+    display: none !important;
+}
+
+.leaflet-marker-icon.point-label {
+    border: none !important;
+    background: transparent !important;
+}
+
+.point-label span {
+    display: block !important;
+    max-width: 140px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.batas-desa-label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-family: 'Segoe UI Black', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000,
+        0 0 8px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: center;
+}
+
+.batas-desa-label::before {
+    display: none !important;
+}
+
 @media(max-width:768px) {
     .sidebar { 
         left: 6px; 
@@ -438,12 +478,19 @@ html, body {
     .navbar-brand img { 
         height: 28px; 
     }
+    .point-label {
+        font-size: 9px !important;
+        padding: 2px 5px !important;
+    }
+    
+    .point-label span {
+        max-width: 90px !important;
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="Pingit.html">
@@ -489,10 +536,8 @@ html, body {
     </div>
 </nav>
 
-<!-- MAP -->
 <div id="map"></div>
 
-<!-- Modern Compass -->
 <div class="compass" aria-hidden="true">
     <svg viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="34" fill="none" stroke="#2b2b2b" stroke-width="1.4"/>
@@ -507,7 +552,6 @@ html, body {
   <div class="label W">B</div>
 </div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
     <div class="sidebar-header"><i class="fas fa-layer-group"></i> &nbsp;Katalog Layer</div>
     <div class="sidebar-content" id="layerControl"></div>
@@ -515,13 +559,11 @@ html, body {
 
 <button class="toggle-sidebar-btn" id="toggleSidebarBtn" title="Toggle layer"><i class="fas fa-bars"></i></button>
 
-<!-- Search -->
 <div class="search-container">
     <input id="searchBox" placeholder="Cari lokasi, nama tempat..." class="search-box" autocomplete="off" />
     <div id="searchSuggestions" class="search-suggestions"></div>
 </div>
 
-<!-- Controls -->
 <div class="map-controls" aria-hidden="true">
     <button class="control-btn" id="btnHome" title="Home"><i class="fas fa-home"></i></button>
     <button class="control-btn" id="btnZoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
@@ -531,10 +573,8 @@ html, body {
 
 <div class="coords-box" id="coords">Lat: - | Lng: -</div>
 
-<!-- Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- GeoJSON data files -->
 <script src="data/BatasDesaPingit_1.js"></script>
 <script src="data/TiapRumah_2.js"></script>
 <script src="data/SemakBelukar_3.js"></script>
@@ -554,13 +594,8 @@ html, body {
 <script src="data/Sungai_17.js"></script>
 
 <script>
-/* ====== INITIAL MAP WITH ZOOM 15 ====== */
-const map = L.map('map', { zoomControl: false }).setView(
-    [-7.417767, 109.517863],  // Center coordinates untuk Pingit
-    15  // Initial zoom level 15
-);
+const map = L.map('map', { zoomControl: false }).setView([-7.417767, 109.517863], 15);
 
-/* ====== BASE LAYERS ====== */
 const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { 
     maxZoom: 22, 
     attribution: '© Google' 
@@ -576,20 +611,19 @@ const googleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={
     attribution: '© Google' 
 });
 
-/* ====== LAYER STORAGE ====== */
 const layers = {};
+const pointLabels = {};
 let allFeatures = [];
 
-/* ====== BASE STYLES ====== */
 const baseStyles = {
     BatasDesaPingit: { 
-        color: 'rgba(255,255,255,1.0)', 
-        dashArray: '15.0,3.0', 
+        color: 'rgba(255,255,255,0.7)', 
+        dashArray: '', 
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 3.0, 
-        fillColor: 'rgba(86,153,190,1.0)', 
-        fillOpacity: 1 
+        fillColor: 'rgba(101,139,211,0.6)', 
+        fillOpacity: 0.6 
     },
     TiapRumah: { 
         color: 'rgba(35,35,35,1.0)', 
@@ -597,7 +631,7 @@ const baseStyles = {
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 1.0, 
-        fillColor: 'rgba(173,137,39,1.0)', 
+        fillColor: 'rgba(143,90,44,1.0)', 
         fillOpacity: 1 
     },
     SemakBelukar: { 
@@ -606,7 +640,7 @@ const baseStyles = {
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 1.0, 
-        fillColor: 'rgba(190,207,80,1.0)', 
+        fillColor: 'rgba(77,151,50,1.0)', 
         fillOpacity: 1 
     },
     Sawah: { 
@@ -615,7 +649,7 @@ const baseStyles = {
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 1.0, 
-        fillColor: 'rgba(128,195,102,1.0)', 
+        fillColor: 'rgba(70,175,43,1.0)', 
         fillOpacity: 1 
     },
     PemukimanWarga: { 
@@ -624,7 +658,7 @@ const baseStyles = {
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 1.0, 
-        fillColor: 'rgba(190,160,86,1.0)', 
+        fillColor: 'rgba(164,135,103,1.0)', 
         fillOpacity: 1 
     },
     Ladang: { 
@@ -633,7 +667,7 @@ const baseStyles = {
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 1.0, 
-        fillColor: 'rgba(88,196,38,1.0)', 
+        fillColor: 'rgba(68,185,22,1.0)', 
         fillOpacity: 1 
     },
     Kebun: { 
@@ -642,19 +676,19 @@ const baseStyles = {
         lineCap: 'butt', 
         lineJoin: 'miter', 
         weight: 1.0, 
-        fillColor: 'rgba(133,182,111,1.0)', 
+        fillColor: 'rgba(26,175,39,1.0)', 
         fillOpacity: 1 
     },
-    Sungai: { 
-        color: 'rgba(45,208,219,1.0)', 
+    Jalan: { 
+        color: 'rgba(252,185,102,1.0)', 
         dashArray: '', 
         lineCap: 'square', 
         lineJoin: 'bevel', 
-        weight: 3.0, 
+        weight: 2.0, 
         fillOpacity: 0 
     },
-    Jalan: { 
-        color: 'rgba(202,196,184,1.0)', 
+    Sungai: { 
+        color: 'rgba(18,187,244,1.0)', 
         dashArray: '', 
         lineCap: 'square', 
         lineJoin: 'bevel', 
@@ -663,52 +697,83 @@ const baseStyles = {
     }
 };
 
-/* ====== CUSTOM ICON MAP ====== */
 const customIconConfig = {
     'Pemerintahan': { path: '../../images/IconMap/Pemerintahan.png', size: [20, 20] },
-    'Kuburan': { path: '../../images/IconMap/Kuburan.png', size: [18, 18] },
-    'Bengkel': { path: '../../images/IconMap/Bengkel.png', size: [18, 18] },
-    'Sekolahan': { path: '../../images/IconMap/Sekolahan.png', size: [20, 20] },
-    'TempatIbadah': { path: '../../images/IconMap/TempatIbadah.png', size: [20, 20] },
+    'Umkm': { path: '../../images/IconMap/Umkm.png', size: [18, 18] },
     'TPQ': { path: '../../images/IconMap/Tpq.png', size: [18, 18] },
-    'UMKM': { path: '../../images/IconMap/Umkm.png', size: [18, 18] },
-    'Toponimi': { path: '../../images/IconMap/Toponimi.png', size: [18, 18] }
+    'Toponimi': { path: '../../images/IconMap/Toponimi.png', size: [18, 18] },
+    'TempatIbadah': { path: '../../images/IconMap/TempatIbadah.png', size: [20, 20] },
+    'Sekolahan': { path: '../../images/IconMap/Sekolahan.png', size: [20, 20] },
+    'Kuburan': { path: '../../images/IconMap/Kuburan.png', size: [18, 18] },
+    'Bengkel': { path: '../../images/IconMap/Bengkel.png', size: [18, 18] }
 };
 
-/* ====== POPUP GENERATOR ====== */
+function getFeatureName(properties) {
+    const nameFields = [
+        'Nama', 'name', 'NAMADS', 'NAMOBJ', 'NmUmkm', 
+        'Nama_TPQ', 'NTptIbadah', 'NmSekolahn', 
+        'Nama_poin', 'Nama_Poin', 'NmKuburan', 'REMARK'
+    ];
+    
+    for (let field of nameFields) {
+        if (properties[field]) {
+            let value = String(properties[field]);
+            if (value.toLowerCase().includes('kantor kepala desa') || 
+                value.toLowerCase().includes('kantor kelurahan') ||
+                value.toLowerCase().includes('kantor desa') ||
+                value.toLowerCase() === 'kantor kepala desa pingit' ||
+                value.toLowerCase() === 'kantor desa pingit') {
+                return 'Balai Desa Pingit';
+            }
+            return value;
+        }
+    }
+    
+    for (let key in properties) {
+        if (properties[key] && properties[key] !== null && properties[key] !== '' && 
+            !['full_id','osm_id','osm_type','id','fid'].includes(key)) {
+            let value = String(properties[key]);
+            if (value.toLowerCase().includes('kantor kepala desa') || 
+                value.toLowerCase().includes('kantor kelurahan') ||
+                value.toLowerCase().includes('kantor desa') ||
+                value.toLowerCase() === 'kantor kepala desa pingit' ||
+                value.toLowerCase() === 'kantor desa pingit') {
+                return 'Balai Desa Pingit';
+            }
+            return value;
+        }
+    }
+    
+    return null;
+}
+
 function generatePopup(props, layerName) {
     const fieldLabels = {
-        'NAMADS': 'Nama Desa',
-        'REMARK': 'Keterangan',
-        'LUASWH': 'Luas Wilayah',
-        'KC': 'Kecamatan',
-        'KAB': 'Kabupaten',
-        'PROV': 'Provinsi',
-        'NAMA KDESA': 'Nama Kepala Desa',
-        'NmUmkm': 'Nama UMKM',
-        'Nama_TPQ': 'Nama TPQ',
-        'NTptIbadah': 'Nama Tempat Ibadah',
-        'NmSekolahn': 'Nama Sekolah',
-        'NmKuburan': 'Nama Kuburan',
-        'Nama_Poin': 'Nama'
+        'NAMADS': 'Nama Desa', 'REMARK': 'Keterangan', 'LUASWH': 'Luas Wilayah',
+        'KC': 'Kecamatan', 'KAB': 'Kabupaten', 'PROV': 'Provinsi',
+        'NAMA KDESA': 'Nama Desa', 'NAMOBJ': 'Nama Objek', 'name': 'Nama',
+        'Nama': 'Nama', 'NmUmkm': 'Nama UMKM', 'Nama_TPQ': 'Nama TPQ',
+        'NTptIbadah': 'Nama Tempat Ibadah', 'NmSekolahn': 'Nama Sekolah',
+        'Nama_poin': 'Nama', 'Nama_Poin': 'Nama', 'NmKuburan': 'Nama Kuburan'
     };
     
     const iconEmoji = {
-        'Pemerintahan': '🏛️', 'Kuburan': '⚰️', 'Bengkel': '🔧',
-        'Sekolahan': '🏫', 'TempatIbadah': '🕌', 'TPQ': '📖', 
-        'UMKM': '🏭', 'Toponimi': '📍',
-        'BatasDesaPingit': '🗺️', 'Sawah': '🌾', 'Kebun': '🌳', 
-        'Ladang': '🌾', 'PemukimanWarga': '🏘️', 'TiapRumah': '🏠',
-        'SemakBelukar': '🌿', 'Sungai': '🌊', 'Jalan': '🛣️'
+        'BatasDesaPingit': '🗺️', 'TiapRumah': '🏠', 'SemakBelukar': '🌿',
+        'Sawah': '🌾', 'PemukimanWarga': '🏘️', 'Ladang': '🌾', 'Kebun': '🌳',
+        'Pemerintahan': '🏛️', 'Umkm': '🏭', 'TPQ': '🕌', 'Toponimi': '📍',
+        'TempatIbadah': '🕌', 'Sekolahan': '🏫', 'Kuburan': '⚰️', 
+        'Bengkel': '🔧', 'Jalan': '🛣️', 'Sungai': '🌊'
     };
     
     const layerLabels = {
-        'Pemerintahan': 'Pemerintahan', 'Kuburan': 'Kuburan', 'Bengkel': 'Bengkel',
-        'Sekolahan': 'Sekolah', 'TempatIbadah': 'Tempat Ibadah', 'TPQ': 'TPQ',
-        'UMKM': 'UMKM', 'Toponimi': 'Toponimi', 'BatasDesaPingit': 'Batas Desa Pingit',
-        'Sawah': 'Sawah', 'Kebun': 'Kebun', 'Ladang': 'Ladang',
-        'PemukimanWarga': 'Pemukiman Warga', 'TiapRumah': 'Bangunan',
-        'SemakBelukar': 'Semak Belukar', 'Sungai': 'Sungai', 'Jalan': 'Jalan'
+        'BatasDesaPingit': 'Batas Desa Pingit', 'TiapRumah': 'Bangunan',
+        'SemakBelukar': 'Semak Belukar', 'Sawah': 'Sawah',
+        'PemukimanWarga': 'Pemukiman Warga', 'Ladang': 'Ladang',
+        'Kebun': 'Kebun', 'Pemerintahan': 'Balai Desa Pingit',
+        'Umkm': 'UMKM', 'TPQ': 'TPQ', 'Toponimi': 'Toponimi',
+        'TempatIbadah': 'Tempat Ibadah', 'Sekolahan': 'Sekolah',
+        'Kuburan': 'Kuburan', 'Bengkel': 'Bengkel', 
+        'Jalan': 'Jalan', 'Sungai': 'Sungai'
     };
     
     const icon = iconEmoji[layerName] || '📍';
@@ -726,8 +791,18 @@ function generatePopup(props, layerName) {
     
     for (let k in props) {
         if (!props.hasOwnProperty(k)) continue;
-        const v = props[k];
+        let v = props[k];
         if (v === null || v === '' || excludeFields.includes(k)) continue;
+        
+        if (typeof v === 'string') {
+            if (v.toLowerCase().includes('kantor kepala desa') || 
+                v.toLowerCase().includes('kantor kelurahan') ||
+                v.toLowerCase().includes('kantor desa') ||
+                v.toLowerCase() === 'kantor kepala desa pingit' ||
+                v.toLowerCase() === 'kantor desa pingit') {
+                v = 'Balai Desa Pingit';
+            }
+        }
         
         let label = fieldLabels[k] || k.replace(/_/g, ' ');
         html += `<div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;border-left:3px solid #2575fc">
@@ -745,7 +820,6 @@ function generatePopup(props, layerName) {
     return html;
 }
 
-/* ====== ADD LAYER HELPER ====== */
 function addLayerToMap(name, data, style) {
     if (typeof data === 'undefined') return;
     
@@ -764,9 +838,9 @@ function addLayerToMap(name, data, style) {
             }
             
             const iconEmoji = {
-                'Pemerintahan': '🏛️', 'Kuburan': '⚰️', 'Bengkel': '🔧',
-                'Sekolahan': '🏫', 'TempatIbadah': '🕌', 'TPQ': '📖',
-                'UMKM': '🏭', 'Toponimi': '📍'
+                'Pemerintahan': '🏛️', 'Umkm': '🏭', 'TPQ': '🕌', 
+                'Toponimi': '📍', 'TempatIbadah': '🕌', 'Sekolahan': '🏫',
+                'Kuburan': '⚰️', 'Bengkel': '🔧'
             };
             
             const html = `<div style="font-size:18px;text-shadow:0 2px 6px rgba(0,0,0,0.3)">${iconEmoji[name]||'📍'}</div>`;
@@ -787,13 +861,75 @@ function addLayerToMap(name, data, style) {
                     className: 'custom-popup' 
                 });
                 
+                if (feat.geometry && feat.geometry.type === 'Point') {
+                    const labelText = getFeatureName(feat.properties);
+                    if (labelText && labelText.length > 0) {
+                        const latlng = layerLeaf.getLatLng();
+                        const displayText = labelText.length > 25 ? labelText.substring(0, 22) + '...' : labelText;
+                        const iconConfig = customIconConfig[name];
+                        const iconSize = iconConfig ? iconConfig.size[0] : 24;
+                        const labelOffsetX = iconSize / 2 + 3;
+                        
+                        const label = L.marker(latlng, {
+                            icon: L.divIcon({
+                                html: `<div style="
+                                    position: absolute;
+                                    left: ${labelOffsetX}px;
+                                    top: 300%;
+                                    transform: translateY(-100%);
+                                    background: #ffffff;
+                                    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.2);
+                                    padding: 3px 7px;
+                                    border-radius: 3px;
+                                    font-family: 'Roboto', Arial, sans-serif;
+                                    font-size: 11px;
+                                    font-weight: 500;
+                                    color: #1a1a1a;
+                                    white-space: nowrap;
+                                    letter-spacing: 0.3px;
+                                    width: fit-content;
+                                    max-width: 140px;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    line-height: 14px;
+                                ">${displayText}</div>`,
+                                className: '',
+                                iconSize: [0, 0],
+                                iconAnchor: [0, 0]
+                            }),
+                            interactive: false,
+                            zIndexOffset: -1000
+                        });
+                        
+                        if (!pointLabels[name]) {
+                            pointLabels[name] = L.layerGroup();
+                        }
+                        pointLabels[name].addLayer(label);
+                    }
+                }
+                
+                if (name === 'BatasDesaPingit' && feat.properties['NAMADS']) {
+                    const center = layerLeaf.getBounds().getCenter();
+                    const label = L.marker(center, {
+                        icon: L.divIcon({
+                            className: 'batas-desa-label',
+                            html: feat.properties['NAMADS'],
+                            iconSize: [150, 40],
+                            iconAnchor: [75, 20]
+                        }),
+                        interactive: false
+                    });
+                    
+                    if (!layers['BatasDesaLabels']) {
+                        layers['BatasDesaLabels'] = L.layerGroup();
+                    }
+                    layers['BatasDesaLabels'].addLayer(label);
+                }
+                
                 if (feat.geometry && feat.geometry.type !== 'Point') {
                     layerLeaf.on('mouseover', () => {
                         if (layerLeaf.setStyle) {
-                            layerLeaf.setStyle({ 
-                                fillOpacity: 0.8, 
-                                fillColor: '#fff3a8' 
-                            });
+                            layerLeaf.setStyle({ fillOpacity: 0.8, fillColor: '#fff3a8' });
                         }
                     });
                     
@@ -810,11 +946,7 @@ function addLayerToMap(name, data, style) {
                     });
                 }
                 
-                allFeatures.push({ 
-                    layer: layerLeaf, 
-                    properties: feat.properties, 
-                    layerName: name 
-                });
+                allFeatures.push({ layer: layerLeaf, properties: feat.properties, layerName: name });
             }
         }
     });
@@ -822,28 +954,26 @@ function addLayerToMap(name, data, style) {
     layers[name] = layer;
 }
 
-/* ====== LAYER CONFIGS ====== */
 const layerConfigs = [
-    { name: 'BatasDesaPingit', varName: 'json_BatasDesaPingit_1', style: baseStyles.BatasDesaPingit, iconImg: '../../images/IconLayer/BatasWilayah.png', label: 'Batas Desa Pingit', type: 'polygon', zoomLevel: 12 },
+    { name: 'BatasDesaPingit', varName: 'json_BatasDesaPingit_1', style: baseStyles.BatasDesaPingit, iconImg: '../../images/IconLayer/BatasWilayah.png', label: 'Batas Desa', type: 'polygon', zoomLevel: 12 },
     { name: 'TiapRumah', varName: 'json_TiapRumah_2', style: baseStyles.TiapRumah, iconImg: '../../images/IconLayer/Pemukiman dan Bangunan.png', label: 'Bangunan', type: 'polygon', zoomLevel: 16 },
-    { name: 'SemakBelukar', varName: 'json_SemakBelukar_3', style: baseStyles.SemakBelukar, iconImg: '../../images/IconLayer/Kebun dan Ladang.png', label: 'Semak Belukar', type: 'polygon', zoomLevel: 17 },
+    { name: 'SemakBelukar', varName: 'json_SemakBelukar_3', style: baseStyles.SemakBelukar, iconImg: '../../images/IconLayer/Kebun dan Ladang.png', label: 'Semak Belukar', type: 'polygon', zoomLevel: 16 },
     { name: 'Sawah', varName: 'json_Sawah_4', style: baseStyles.Sawah, iconImg: '../../images/IconLayer/Sawah.png', label: 'Sawah', type: 'polygon', zoomLevel: 17 },
     { name: 'PemukimanWarga', varName: 'json_PemukimanWarga_5', style: baseStyles.PemukimanWarga, iconImg: '../../images/IconLayer/Pemukiman dan Bangunan.png', label: 'Pemukiman Warga', type: 'polygon', zoomLevel: 16 },
     { name: 'Ladang', varName: 'json_Ladang_6', style: baseStyles.Ladang, iconImg: '../../images/IconLayer/Kebun dan Ladang.png', label: 'Ladang', type: 'polygon', zoomLevel: 17 },
     { name: 'Kebun', varName: 'json_Kebun_7', style: baseStyles.Kebun, iconImg: '../../images/IconLayer/Kebun dan Ladang.png', label: 'Kebun', type: 'polygon', zoomLevel: 17 },
-    { name: 'UMKM', varName: 'json_Umkm_8', style: null, iconImg: '../../images/IconMap/Umkm.png', label: 'UMKM', type: 'point', zoomLevel: 17 },
+    { name: 'Umkm', varName: 'json_Umkm_8', style: null, iconImg: '../../images/IconMap/Umkm.png', label: 'UMKM', type: 'point', zoomLevel: 17 },
     { name: 'TPQ', varName: 'json_TPQ_9', style: null, iconImg: '../../images/IconMap/Tpq.png', label: 'TPQ', type: 'point', zoomLevel: 17 },
-    { name: 'Toponimi', varName: 'json_Toponimi_10', style: null, iconImg: '../../images/IconMap/Toponimi.png', label: 'Toponimi', type: 'point', zoomLevel: 17 },
+    { name: 'Toponimi', varName: 'json_Toponimi_10', style: null, iconImg: '../../images/IconMap/Toponimi.png', label: 'Toponimi', type: 'point', zoomLevel: 2, maxZoomLevel: 13 },
     { name: 'TempatIbadah', varName: 'json_TempatIbadah_11', style: null, iconImg: '../../images/IconMap/TempatIbadah.png', label: 'Tempat Ibadah', type: 'point', zoomLevel: 17 },
     { name: 'Sekolahan', varName: 'json_Sekolahan_12', style: null, iconImg: '../../images/IconMap/Sekolahan.png', label: 'Sekolah', type: 'point', zoomLevel: 17 },
-    { name: 'Pemerintahan', varName: 'json_Pemerintahan_13', style: null, iconImg: '../../images/IconMap/Pemerintahan.png', label: 'Pemerintahan', type: 'point', zoomLevel: 14 },
+    { name: 'Pemerintahan', varName: 'json_Pemerintahan_13', style: null, iconImg: '../../images/IconMap/Pemerintahan.png', label: 'Balai Desa', type: 'point', zoomLevel: 14 },
     { name: 'Kuburan', varName: 'json_Kuburan_14', style: null, iconImg: '../../images/IconMap/Kuburan.png', label: 'Kuburan', type: 'point', zoomLevel: 17 },
     { name: 'Bengkel', varName: 'json_Bengkel_15', style: null, iconImg: '../../images/IconMap/Bengkel.png', label: 'Bengkel', type: 'point', zoomLevel: 17 },
-    { name: 'Sungai', varName: 'json_Sungai_17', style: baseStyles.Sungai, iconImg: '../../images/IconLayer/Sungai.png', label: 'Sungai', type: 'line', zoomLevel: 14 },
-    { name: 'Jalan', varName: 'json_Jalan_16', style: baseStyles.Jalan, iconImg: '../../images/IconLayer/Jalan.png', label: 'Jalan', type: 'line', zoomLevel: 14 }
+    { name: 'Jalan', varName: 'json_Jalan_16', style: baseStyles.Jalan, iconImg: '../../images/IconLayer/Jalan.png', label: 'Jalan', type: 'line', zoomLevel: 14 },
+    { name: 'Sungai', varName: 'json_Sungai_17', style: baseStyles.Sungai, iconImg: '../../images/IconLayer/Sungai.png', label: 'Sungai', type: 'line', zoomLevel: 14 }
 ];
 
-/* ====== BUILD SIDEBAR HTML AND LOAD LAYERS ====== */
 const sidebarEl = document.getElementById('layerControl');
 let html = `<div class="layer-group">
     <div class="layer-group-title"><i class="fas fa-map"></i>&nbsp; Base Map</div>
@@ -863,7 +993,7 @@ let html = `<div class="layer-group">
 <div class="layer-group"><div class="layer-group-title"><i class="fas fa-layer-group"></i>&nbsp; Layer Peta</div>`;
 
 layerConfigs.forEach(cfg => {
-    const iconDisplay = cfg.iconImg ? `<img src="${cfg.iconImg}" alt="${cfg.label}" />` : cfg.icon;
+    const iconDisplay = cfg.iconImg ? `<img src="${cfg.iconImg}" alt="${cfg.label}" />` : '';
     html += `<div class="layer-item" data-layer="${cfg.name}">
         <input type="checkbox" class="layer-checkbox" id="layer-${cfg.name}" checked style="width:15px;height:15px"/>
         <div class="icon">${iconDisplay}</div>
@@ -882,13 +1012,10 @@ layerConfigs.forEach(cfg => {
 html += '</div>';
 sidebarEl.innerHTML = html;
 
-/* ====== WIRE CONTROLS ====== */
 function wireControls() {
     document.querySelectorAll('.layer-item[data-layer]').forEach(item => {
         const cb = item.querySelector('.layer-checkbox');
-        cb.addEventListener('change', () => { 
-            applyZoomRendering(); 
-        });
+        cb.addEventListener('change', () => { applyZoomRendering(); });
     });
 
     document.getElementById('base-sat').addEventListener('change', function() {
@@ -918,7 +1045,6 @@ function wireControls() {
 
 wireControls();
 
-/* ====== TOGGLE SIDEBAR ====== */
 const sidebar = document.getElementById('sidebar');
 const toggleBtn = document.getElementById('toggleSidebarBtn');
 
@@ -927,7 +1053,6 @@ toggleBtn.addEventListener('click', () => {
     setTimeout(() => map.invalidateSize(), 400);
 });
 
-/* ====== MAP CONTROLS ====== */
 document.getElementById('btnZoomIn').addEventListener('click', () => map.zoomIn());
 document.getElementById('btnZoomOut').addEventListener('click', () => map.zoomOut());
 document.getElementById('btnHome').addEventListener('click', () => {
@@ -937,7 +1062,6 @@ document.getElementById('btnLocate').addEventListener('click', () => {
     map.locate({ setView: true, maxZoom: 16 });
 });
 
-/* ====== MOUSE COORDINATES ====== */
 map.on('mousemove', e => {
     document.getElementById('coords').innerText = 
         `Lat: ${e.latlng.lat.toFixed(5)} | Lng: ${e.latlng.lng.toFixed(5)}`;
@@ -947,29 +1071,8 @@ map.on('locationfound', e => {
     L.marker(e.latlng).addTo(map).bindPopup('📍 Anda di sini').openPopup();
 });
 
-/* ====== SEARCH WITH AUTOCOMPLETE SUGGESTIONS ====== */
 const searchBox = document.getElementById('searchBox');
 const suggestionsBox = document.getElementById('searchSuggestions');
-
-function getFeatureName(properties) {
-    const nameFields = [
-        'Nama', 'name', 'NAMADS', 'REMARK', 'NmUmkm', 'Nama_TPQ',
-        'NTptIbadah', 'NmSekolahn', 'NmKuburan', 'Nama_Poin'
-    ];
-    
-    for (let field of nameFields) {
-        if (properties[field]) return properties[field];
-    }
-    
-    for (let key in properties) {
-        if (properties[key] && properties[key] !== null && properties[key] !== '' && 
-            !['full_id','osm_id','osm_type','id','fid'].includes(key)) {
-            return properties[key];
-        }
-    }
-    
-    return 'Tanpa Nama';
-}
 
 searchBox.addEventListener('input', function(e) {
     const term = e.target.value.trim().toLowerCase();
@@ -980,15 +1083,46 @@ searchBox.addEventListener('input', function(e) {
     }
     
     const matches = allFeatures.filter(it => {
-        return Object.values(it.properties || {}).some(v => 
-            String(v).toLowerCase().includes(term)
-        );
+        return Object.values(it.properties || {}).some(v => {
+            let searchVal = String(v).toLowerCase();
+            
+            if (term.includes('balai')) {
+                if (searchVal.includes('kantor kepala desa') || 
+                    searchVal.includes('kantor kelurahan') ||
+                    searchVal.includes('kantor desa')) {
+                    return true;
+                }
+            }
+            
+            if (term.includes('kantor')) {
+                if (searchVal.includes('kantor kepala desa') || 
+                    searchVal.includes('kantor kelurahan') ||
+                    searchVal.includes('kantor desa')) {
+                    return true;
+                }
+            }
+            
+            if (term.includes('desa') && !term.includes('balai')) {
+                if (searchVal.includes('kantor kepala desa') || 
+                    searchVal.includes('kantor desa')) {
+                    return true;
+                }
+            }
+            
+            if (term.includes('pingit')) {
+                if (searchVal.includes('kantor') || searchVal.includes('desa')) {
+                    return true;
+                }
+            }
+            
+            return searchVal.includes(term);
+        });
     });
     
     if (matches.length > 0) {
         let html = '';
         matches.slice(0, 10).forEach(match => {
-            const name = getFeatureName(match.properties);
+            const name = getFeatureName(match.properties) || 'Tanpa Nama';
             const type = match.layerName;
             const icon = getIconForLayer(type);
             
@@ -1018,12 +1152,11 @@ searchBox.addEventListener('input', function(e) {
 
 function getIconForLayer(layerName) {
     const icons = {
-        'Pemerintahan': '🏛️', 'Kuburan': '⚰️', 'Bengkel': '🔧',
-        'Sekolahan': '🏫', 'TempatIbadah': '🕌', 'TPQ': '📖',
-        'UMKM': '🏭', 'Toponimi': '📍',
-        'BatasDesaPingit': '🗺️', 'Sawah': '🌾', 'Kebun': '🌳',
-        'Ladang': '🌾', 'PemukimanWarga': '🏘️', 'TiapRumah': '🏠',
-        'SemakBelukar': '🌿', 'Sungai': '🌊', 'Jalan': '🛣️'
+        'BatasDesaPingit': '🗺️', 'TiapRumah': '🏠', 'SemakBelukar': '🌿',
+        'Sawah': '🌾', 'PemukimanWarga': '🏘️', 'Ladang': '🌾', 'Kebun': '🌳',
+        'Pemerintahan': '🏛️', 'Umkm': '🏭', 'TPQ': '🕌', 'Toponimi': '📍',
+        'TempatIbadah': '🕌', 'Sekolahan': '🏫', 'Kuburan': '⚰️',
+        'Bengkel': '🔧', 'Jalan': '🛣️', 'Sungai': '🌊'
     };
     return icons[layerName] || '📍';
 }
@@ -1050,13 +1183,11 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-/* ====== ATTRIBUTION ====== */
 L.control.attribution({ 
     position: 'bottomleft', 
-    prefix: '<a href="../index.html">Desa Pingit</a> | Leaflet & QGIS' 
+    prefix: '<a href="../../index.html">Desa Pingit</a> | Leaflet & QGIS' 
 }).addTo(map);
 
-/* ====== PROGRESSIVE ZOOM RENDERING ====== */
 function isChecked(layerName) {
     const el = document.querySelector(`.layer-item[data-layer="${layerName}"] input`);
     return el ? el.checked : true;
@@ -1074,9 +1205,12 @@ function setLayerVisible(name, visible) {
 }
 
 function getOpacityForZoom(zoom) {
-    if (zoom <= 15) return 0.6;
-    if (zoom <= 17) return 0.35;
-    return 0.2;
+    if (zoom <= 14) return 0.7;
+    if (zoom === 15) return 0.55;
+    if (zoom === 16) return 0.35;
+    if (zoom === 17) return 0.2;
+    if (zoom >= 18) return 0.08;
+    return 0.05;
 }
 
 function updateLayerTransparency(layerName) {
@@ -1098,6 +1232,33 @@ function updateLayerTransparency(layerName) {
     });
 }
 
+function updatePointLabelsVisibility() {
+    const zoom = map.getZoom();
+    
+    Object.keys(pointLabels).forEach(layerName => {
+        const labelGroup = pointLabels[layerName];
+        if (!labelGroup) return;
+        
+        const mainLayer = layers[layerName];
+        const cfg = layerConfigs.find(c => c.name === layerName);
+        
+        if (!mainLayer || !cfg) return;
+        
+        const poinShouldShow = zoom >= cfg.zoomLevel && (!cfg.maxZoomLevel || zoom <= cfg.maxZoomLevel);
+        const labelShouldShow = poinShouldShow && isChecked(layerName);
+        
+        if (labelShouldShow) {
+            if (!map.hasLayer(labelGroup)) {
+                map.addLayer(labelGroup);
+            }
+        } else {
+            if (map.hasLayer(labelGroup)) {
+                map.removeLayer(labelGroup);
+            }
+        }
+    });
+}
+
 function applyZoomRendering() {
     const z = map.getZoom();
 
@@ -1114,6 +1275,20 @@ function applyZoomRendering() {
             updateLayerTransparency(cfg.name);
         }
     });
+    
+    if (layers['BatasDesaLabels']) {
+        if (z >= 12 && isChecked('BatasDesaPingit')) {
+            if (!map.hasLayer(layers['BatasDesaLabels'])) {
+                map.addLayer(layers['BatasDesaLabels']);
+            }
+        } else {
+            if (map.hasLayer(layers['BatasDesaLabels'])) {
+                map.removeLayer(layers['BatasDesaLabels']);
+            }
+        }
+    }
+    
+    updatePointLabelsVisibility();
 }
 
 map.on('zoomend', applyZoomRendering);
@@ -1122,7 +1297,6 @@ document.querySelectorAll('.layer-item[data-layer] input').forEach(cb => {
     cb.addEventListener('change', applyZoomRendering);
 });
 
-// Initial render
 applyZoomRendering();
 </script>
 
