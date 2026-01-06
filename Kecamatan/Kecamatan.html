@@ -59,78 +59,258 @@ nav {
     font-weight: 700;
 }
 
-:root { --sidebar-w: 380px; --accent1: #1a5490; --accent2: #2575fc; }
-html,body { height:100%; margin:0; font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial; }
+:root { 
+    --sidebar-w: 380px; 
+    --accent1: #1a5490; 
+    --accent2: #2575fc; 
+}
 
-/* map occupies area under navbar */
-#map { position:absolute; top:68px; left:0; right:0; bottom:0; z-index:1; }
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial; 
+}
 
-/* Sidebar */
+#map { 
+    position: absolute; 
+    top: 68px; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    z-index: 1; 
+}
+
 .sidebar {
-  position:absolute; top:88px; left:20px; width:var(--sidebar-w); border-radius:16px;
-  background:#fff; box-shadow:0 8px 32px rgba(0,0,0,0.12); z-index:995; overflow:hidden;
-  transition: transform .35s ease;
+    position: absolute; 
+    top: 88px; 
+    left: 20px; 
+    width: var(--sidebar-w); 
+    max-height: calc(100vh - 120px);
+    border-radius: 16px;
+    background: #fff; 
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
+    z-index: 995; 
+    overflow: hidden;
+    transition: transform .35s ease;
 }
-.sidebar.collapsed { transform: translateX(calc(-1 * (var(--sidebar-w) + 40px))); }
+
+.sidebar.collapsed { 
+    transform: translateX(calc(-1 * (var(--sidebar-w) + 40px))); 
+}
+
 .sidebar-header {
-  padding:14px 16px; font-weight:700; color:#fff; background: linear-gradient(135deg,var(--accent1),var(--accent2));
-  display:flex; gap:10px; align-items:center; font-size: 15px;
+    padding: 14px 16px; 
+    font-weight: 700; 
+    color: #fff; 
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex; 
+    gap: 10px; 
+    align-items: center; 
+    font-size: 15px;
 }
-.sidebar-content { max-height: calc(100vh - 180px); overflow:auto; padding:12px 14px; }
-.layer-group-title { font-weight:700; margin:8px 6px 10px; color:#333; display:flex; align-items:center; gap:8px; font-size: 14px; }
-.layer-item { display:flex; align-items:center; gap:10px; padding:9px; background:#f6f8fb; border-radius:10px; margin-bottom:8px; cursor:pointer; transition: .2s; }
-.layer-item:hover { transform: translateX(6px); background:#eef4ff; }
-.layer-item .icon { font-size:18px; width:28px; text-align:center; display: flex; align-items: center; justify-content: center; }
-.layer-item .icon img { width: 18px; height: 18px; object-fit: contain; }
-.layer-item label { font-size: 14px; cursor: pointer; margin: 0; }
 
-/* Toggle button */
+.sidebar-content { 
+    max-height: calc(100vh - 220px); 
+    overflow-y: auto; 
+    padding: 12px 14px; 
+}
+
+.layer-group-title { 
+    font-weight: 700; 
+    margin: 8px 6px 10px; 
+    color: #333; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 14px; 
+}
+
+.layer-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    padding: 9px; 
+    background: #f6f8fb; 
+    border-radius: 10px; 
+    margin-bottom: 8px; 
+    cursor: pointer; 
+    transition: .2s; 
+}
+
+.layer-item:hover { 
+    transform: translateX(6px); 
+    background: #eef4ff; 
+}
+
+.layer-item .icon { 
+    font-size: 18px; 
+    width: 28px; 
+    text-align: center; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.layer-item .icon img { 
+    width: 18px; 
+    height: 18px; 
+    object-fit: contain; 
+}
+
+.layer-item label { 
+    font-size: 14px; 
+    cursor: pointer; 
+    margin: 0; 
+    flex: 1;
+}
+
 .toggle-sidebar-btn {
-  position:absolute; top:98px; left: calc(var(--sidebar-w) + 42px); width:42px; height:42px; z-index:996;
-  background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.12); border:none; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; transition:.25s; font-size: 18px; color: var(--accent1);
+    position: absolute; 
+    top: 98px; 
+    left: calc(var(--sidebar-w) + 42px); 
+    width: 42px; 
+    height: 42px; 
+    z-index: 996;
+    background: #fff; 
+    border-radius: 10px; 
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
+    border: none; 
+    cursor: pointer;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: .25s; 
+    font-size: 18px; 
+    color: var(--accent1);
 }
-.toggle-sidebar-btn:hover { background: var(--accent1); color: white; }
-.sidebar.collapsed + .toggle-sidebar-btn { left: 22px; }
 
-/* Search & controls */
-.search-container { position:absolute; top:84px; right:20px; z-index:997; }
-.search-box { width:340px; padding:11px 15px; border-radius:12px; box-shadow:0 8px 22px rgba(0,0,0,0.12); border:none; background:white; font-size: 14px; }
-.search-suggestions { position:absolute; top:52px; right:0; width:340px; max-height:300px; overflow-y:auto; background:white; border-radius:12px; box-shadow:0 8px 22px rgba(0,0,0,0.15); display:none; z-index:999; }
-.search-suggestion-item { padding:10px 15px; cursor:pointer; border-bottom:1px solid #f0f0f0; font-size:14px; transition:.2s; }
-.search-suggestion-item:last-child { border-bottom:none; }
-.search-suggestion-item:hover { background:#eef4ff; color:var(--accent1); }
-.search-suggestion-item .suggestion-name { font-weight:600; color:#333; }
-.search-suggestion-item .suggestion-type { font-size:12px; color:#888; margin-left:8px; }
-.search-suggestion-item .suggestion-icon { margin-right:8px; }
-.map-controls { position:absolute; right:20px; top:158px; z-index:997; display:flex; flex-direction:column; gap:10px; }
-.control-btn { width:44px; height:44px; border-radius:12px; border:none; background:white; box-shadow:0 8px 20px rgba(0,0,0,0.12); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--accent1); font-size: 18px; transition: .25s; }
-.control-btn:hover { background:var(--accent1); color:white; transform:translateY(-3px); }
+.toggle-sidebar-btn:hover { 
+    background: var(--accent1); 
+    color: white; 
+}
 
-/* Modern Compass */
+.sidebar.collapsed + .toggle-sidebar-btn { 
+    left: 22px; 
+}
+
+.search-container { 
+    position: absolute; 
+    top: 84px; 
+    right: 20px; 
+    z-index: 997; 
+}
+
+.search-box { 
+    width: 340px; 
+    padding: 11px 15px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12); 
+    border: none; 
+    background: white; 
+    font-size: 14px; 
+}
+
+.search-suggestions { 
+    position: absolute; 
+    top: 52px; 
+    right: 0; 
+    width: 340px; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    background: white; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 22px rgba(0,0,0,0.15); 
+    display: none; 
+    z-index: 999; 
+}
+
+.search-suggestion-item { 
+    padding: 10px 15px; 
+    cursor: pointer; 
+    border-bottom: 1px solid #f0f0f0; 
+    font-size: 14px; 
+    transition: .2s; 
+}
+
+.search-suggestion-item:last-child { 
+    border-bottom: none; 
+}
+
+.search-suggestion-item:hover { 
+    background: #eef4ff; 
+    color: var(--accent1); 
+}
+
+.search-suggestion-item .suggestion-name { 
+    font-weight: 600; 
+    color: #333; 
+}
+
+.search-suggestion-item .suggestion-type { 
+    font-size: 12px; 
+    color: #888; 
+    margin-left: 8px; 
+}
+
+.search-suggestion-item .suggestion-icon { 
+    margin-right: 8px; 
+}
+
+.map-controls { 
+    position: absolute; 
+    right: 20px; 
+    top: 158px; 
+    z-index: 997; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
+.control-btn { 
+    width: 44px; 
+    height: 44px; 
+    border-radius: 12px; 
+    border: none; 
+    background: white; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    color: var(--accent1); 
+    font-size: 18px; 
+    transition: .25s; 
+}
+
+.control-btn:hover { 
+    background: var(--accent1); 
+    color: white; 
+    transform: translateY(-3px); 
+}
+
 .compass {
-  position: absolute;
-  right: 20px;
-  bottom: 75px;
-  width: 85px;
-  height: 85px;
-  z-index: 997;
-  pointer-events: none;
-  opacity: 0.92;
+    position: absolute;
+    right: 20px;
+    bottom: 75px;
+    width: 85px;
+    height: 85px;
+    z-index: 997;
+    pointer-events: none;
+    opacity: 0.92;
 }
 
 .compass svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.25));
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.25));
 }
 
 .compass .label {
-  position: absolute;
-  font-weight: 700;
-  color: #222;
-  font-size: 12px;
-  pointer-events: none;
+    position: absolute;
+    font-weight: 700;
+    color: #222;
+    font-size: 12px;
+    pointer-events: none;
 }
 
 .compass .N { top: -4px; left: 50%; transform: translateX(-50%); }
@@ -138,66 +318,150 @@ html,body { height:100%; margin:0; font-family: 'Segoe UI', system-ui, -apple-sy
 .compass .E { right: -4px; top: 50%; transform: translateY(-50%); }
 .compass .W { left: -4px; top: 50%; transform: translateY(-50%); }
 
-/* Coordinates box */
-.coords-box { position:absolute; right:20px; bottom:16px; z-index:997; background:white; padding:9px 13px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.12); font-family:monospace; color:#333; font-size: 13px; }
+.coords-box { 
+    position: absolute; 
+    right: 20px; 
+    bottom: 16px; 
+    z-index: 997; 
+    background: white; 
+    padding: 9px 13px; 
+    border-radius: 10px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12); 
+    font-family: monospace; 
+    color: #333; 
+    font-size: 13px; 
+}
 
-/* Custom Popup Styling */
 .custom-popup .leaflet-popup-content-wrapper {
-  border-radius: 12px;
-  padding: 0;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
-.custom-popup .leaflet-popup-content {
-  margin: 15px 20px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-.custom-popup .leaflet-popup-tip {
-  background: white;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
-/* Dusun Label Styling */
+.custom-popup .leaflet-popup-content {
+    margin: 15px 20px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.custom-popup .leaflet-popup-tip {
+    background: white;
+}
+
+.custom-marker-icon {
+    background: transparent !important;
+    border: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leaflet-div-icon {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* LABEL POIN SEPERTI GOOGLE MAPS - ULTRA CLEAN */
+.point-label {
+    background: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.2) !important;
+    font-family: 'Roboto', Arial, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #1a1a1a !important;
+    padding: 3px 7px !important;
+    border-radius: 3px !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+    letter-spacing: 0.3px !important;
+}
+
+.point-label::before,
+.point-label::after {
+    display: none !important;
+}
+
+.leaflet-marker-icon.point-label {
+    border: none !important;
+    background: transparent !important;
+}
+
+.point-label span {
+    display: block !important;
+    max-width: 140px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
 .dusun-label {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  font-weight: 700;
-  font-size: 14px;
-  color: #ffffff;
-  text-shadow: 
-    -1.5px -1.5px 0 #000,
-    1.5px -1.5px 0 #000,
-    -1.5px 1.5px 0 #000,
-    1.5px 1.5px 0 #000,
-    0 0 6px rgba(0,0,0,0.9);
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  pointer-events: none;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-family: 'Segoe UI Black', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 
+        -2px -2px 0 #000,
+        2px -2px 0 #000,
+        -2px 2px 0 #000,
+        2px 2px 0 #000,
+        0 0 8px rgba(0,0,0,0.8);
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: center;
 }
 
 .dusun-label::before {
-  display: none !important;
+    display: none !important;
 }
 
-.leaflet-tooltip-pane {
-  z-index: 650 !important;
-}
-
-@media(max-width:768px){
-  .sidebar { left:6px; width:92%; top:84px; }
-  .toggle-sidebar-btn { left: 6px; top: 140px; }
-  .search-box { width:220px; right:12px; font-size: 13px; }
-  .search-suggestions { width:220px; font-size: 13px; }
-  .compass { right:12px; bottom:70px; width:75px; height:75px; }
-  .navbar-brand { font-size: 15px; }
-  .navbar-brand img { height: 28px; }
-  .dusun-label { font-size: 12px; }
+@media(max-width:768px) {
+    .sidebar { 
+        left: 6px; 
+        width: 92%; 
+        top: 84px; 
+    }
+    .toggle-sidebar-btn { 
+        left: 6px; 
+        top: 140px; 
+    }
+    .search-box { 
+        width: 220px; 
+        right: 12px; 
+        font-size: 13px; 
+    }
+    .search-suggestions { 
+        width: 220px; 
+        font-size: 13px; 
+    }
+    .compass { 
+        right: 12px; 
+        bottom: 70px; 
+        width: 75px; 
+        height: 75px; 
+    }
+    .navbar-brand { 
+        font-size: 15px; 
+    }
+    .navbar-brand img { 
+        height: 28px; 
+    }
+    .point-label {
+        font-size: 9px !important;
+        padding: 2px 5px !important;
+    }
+    
+    .point-label span {
+        max-width: 90px !important;
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg shadow-sm fixed-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="../index.html">
@@ -211,77 +475,62 @@ html,body { height:100%; margin:0; font-family: 'Segoe UI', system-ui, -apple-sy
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
                 <li class="nav-item">
                     <a class="nav-link" href="../index.html">Beranda</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="../Desa/Desa Situwangi/Situwangi.html">Peta Desa Situwangi</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link active" href="Kecamatan.html">Peta Kecamatan Rakit</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="../Tentang.html">Tentang</a>
                 </li>
-
             </ul>
         </div>
-
     </div>
 </nav>
 
-<!-- MAP -->
 <div id="map"></div>
 
-<!-- Modern Compass -->
 <div class="compass" aria-hidden="true">
-  <svg viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="34" fill="none" stroke="#2b2b2b" stroke-width="1.4"/>
-    <circle cx="50" cy="50" r="28" fill="none" stroke="#4b4b4b" stroke-width="1"/>
-    <polygon points="50,10 54,50 50,56 46,50" fill="#0c1b3c"/>
-    <polygon points="50,90 54,50 50,44 46,50" fill="#ffffff"/>
-    <circle cx="50" cy="50" r="4" fill="#0c1b3c"/>
-  </svg>
+    <svg viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="34" fill="none" stroke="#2b2b2b" stroke-width="1.4"/>
+        <circle cx="50" cy="50" r="28" fill="none" stroke="#4b4b4b" stroke-width="1"/>
+        <polygon points="50,10 54,50 50,56 46,50" fill="#0c1b3c"/>
+        <polygon points="50,90 54,50 50,44 46,50" fill="#ffffff"/>
+        <circle cx="50" cy="50" r="4" fill="#0c1b3c"/>
+    </svg>
   <div class="label N">U</div>
   <div class="label S">S</div>
   <div class="label E">T</div>
   <div class="label W">B</div>
 </div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-  <div class="sidebar-header"><i class="fas fa-layer-group"></i> &nbsp;Katalog Layer</div>
-  <div class="sidebar-content" id="layerControl">
-    <!-- content inserted by JS -->
-  </div>
+    <div class="sidebar-header"><i class="fas fa-layer-group"></i> &nbsp;Katalog Layer</div>
+    <div class="sidebar-content" id="layerControl"></div>
 </div>
 
 <button class="toggle-sidebar-btn" id="toggleSidebarBtn" title="Toggle layer"><i class="fas fa-bars"></i></button>
 
-<!-- Search -->
 <div class="search-container">
-  <input id="searchBox" placeholder="Cari lokasi, nama tempat..." class="search-box" autocomplete="off" />
-  <div id="searchSuggestions" class="search-suggestions"></div>
+    <input id="searchBox" placeholder="Cari lokasi, nama tempat..." class="search-box" autocomplete="off" />
+    <div id="searchSuggestions" class="search-suggestions"></div>
 </div>
 
-<!-- Controls -->
 <div class="map-controls" aria-hidden="true">
-  <button class="control-btn" id="btnHome" title="Home"><i class="fas fa-home"></i></button>
-  <button class="control-btn" id="btnZoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
-  <button class="control-btn" id="btnZoomOut" title="Zoom out"><i class="fas fa-minus"></i></button>
-  <button class="control-btn" id="btnLocate" title="Lokasi saya"><i class="fas fa-location-crosshairs"></i></button>
+    <button class="control-btn" id="btnHome" title="Home"><i class="fas fa-home"></i></button>
+    <button class="control-btn" id="btnZoomIn" title="Zoom in"><i class="fas fa-plus"></i></button>
+    <button class="control-btn" id="btnZoomOut" title="Zoom out"><i class="fas fa-minus"></i></button>
+    <button class="control-btn" id="btnLocate" title="Lokasi saya"><i class="fas fa-location-crosshairs"></i></button>
 </div>
 
 <div class="coords-box" id="coords">Lat: - | Lng: -</div>
 
-<!-- Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- GeoJSON data files -->
 <script src="data/BatasWilayahKecamatanRakit_1.js"></script>
 <script src="data/TiapRumah_2.js"></script>
 <script src="data/PemukimanWarga_3.js"></script>
@@ -312,35 +561,25 @@ html,body { height:100%; margin:0; font-family: 'Segoe UI', system-ui, -apple-sy
 <script src="data/Kecamatan_28.js"></script>
 
 <script>
-/* ====== INITIAL MAP ====== */
-const map = L.map('map', { zoomControl:false }).fitBounds([[-7.4738550399846115,109.49129838882446],[-7.365037326909418,109.60565538425524]]);
+const map = L.map('map', { zoomControl: false }).fitBounds([[-7.4738550399846115,109.49129838882446],[-7.365037326909418,109.60565538425524]]);
 
-/* Base layers */
-const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom:22, attribution:'© Google' }).addTo(map);
-const googleTerrain = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', { maxZoom:22, attribution:'© Google' });
-const googleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom:22, attribution:'© Google' });
+const googleSatellite = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', { maxZoom: 22, attribution: '© Google' }).addTo(map);
+const googleTerrain = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', { maxZoom: 22, attribution: '© Google' });
+const googleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 22, attribution: '© Google' });
 
-/* Layer storage */
 const layers = {};
+const pointLabels = {};
 let allFeatures = [];
 
-/* BASE STYLES - Warna asli dari file yang dipasted */
 const baseStyles = {
   BatasWilayah: { color:'rgba(255,255,255,1.0)', dashArray:'24.0,12.0', lineCap:'square', lineJoin:'bevel', weight:6.0, fillOpacity:0 },
   Sawah: { color:'rgba(35,35,35,1.0)', dashArray:'', lineCap:'butt', lineJoin:'miter', weight:1.0, fillColor:'rgba(19,205,0,1.0)', fillOpacity:1 },
   Dusun: f => {
     const colors = {
-      'Adipasir':'rgba(52,176,206,1.0)',
-      'Badamita':'rgba(82,150,199,1.0)',
-      'Bandingan':'rgba(66,120,198,1.0)',
-      'Gelang':'rgba(116,156,236,1.0)',
-      'Kincang':'rgba(71,167,221,1.0)',
-      'Lengkong':'rgba(56,121,188,1.0)',
-      'Luwung':'rgba(81,132,214,1.0)',
-      'Pingit':'rgba(46,183,227,1.0)',
-      'Rakit':'rgba(94,155,219,1.0)',
-      'Situwangi':'rgba(80,134,206,1.0)',
-      'Tanjunganom':'rgba(85,127,223,1.0)'
+      'Adipasir':'rgba(52,176,206,1.0)', 'Badamita':'rgba(82,150,199,1.0)', 'Bandingan':'rgba(66,120,198,1.0)',
+      'Gelang':'rgba(116,156,236,1.0)', 'Kincang':'rgba(71,167,221,1.0)', 'Lengkong':'rgba(56,121,188,1.0)',
+      'Luwung':'rgba(81,132,214,1.0)', 'Pingit':'rgba(46,183,227,1.0)', 'Rakit':'rgba(94,155,219,1.0)',
+      'Situwangi':'rgba(80,134,206,1.0)', 'Tanjunganom':'rgba(85,127,223,1.0)'
     };
     return { color:'rgba(255,255,255,1.0)', dashArray:'', lineCap:'butt', lineJoin:'miter', weight:2.0, fillColor: colors[(f.properties && f.properties['NAMADS'])] || '#cfcfcf', fillOpacity:0.7 };
   },
@@ -353,7 +592,6 @@ const baseStyles = {
   Jalan: { color:'rgba(187,214,221,1.0)', dashArray:'', lineCap:'square', lineJoin:'bevel', weight:3.0, fillOpacity:0 }
 };
 
-/* CUSTOM ICON MAP */
 const customIconConfig = {
   'RumahSayaFarizFikri': { path: '../images/IconMap/RumahSayaFarizFikri.png', size: [22, 22] },
   'LayananKesehatan': { path: '../images/IconMap/LayananKesehatan.png', size: [20, 20] },
@@ -375,107 +613,134 @@ const customIconConfig = {
   'Kecamatan': { path: '../images/IconMap/Poin Desa dan Kecamatan.png', size: [22, 22] }
 };
 
-/* Popup generator */
+const desaMapping = {
+  'Adipasir': 'Balai Desa Adipasir',
+  'Badamita': 'Balai Desa Badamita',
+  'Bandingan': 'Balai Desa Bandingan',
+  'Gelang': 'Balai Desa Gelang',
+  'Kincang': 'Balai Desa Kincang',
+  'Lengkong': 'Balai Desa Lengkong',
+  'Luwung': 'Balai Desa Luwung',
+  'Pingit': 'Balai Desa Pingit',
+  'Rakit': 'Balai Desa Rakit',
+  'Situwangi': 'Balai Desa Situwangi',
+  'Tanjunganom': 'Balai Desa Tanjunganom'
+};
+
+function convertKantorToBalai(value) {
+  if (typeof value !== 'string') return value;
+  const lowerValue = value.toLowerCase();
+  
+  for (let [desa, balaiDesa] of Object.entries(desaMapping)) {
+    if ((lowerValue.includes('kantor kepala desa') || 
+         lowerValue.includes('kantor kelurahan') || 
+         lowerValue.includes('kantor desa')) && 
+        lowerValue.includes(desa.toLowerCase())) {
+      return balaiDesa;
+    }
+  }
+  
+  return value;
+}
+
+function getFeatureName(properties) {
+  const nameFields = [
+    'Nama', 'name', 'NAMOBJ', 'NAMADS', 'NmWahana', 'NmPasar', 'NmPomMini', 
+    'Nama_Rumah', 'NmToko', 'Nama_TPQ', 'Nama_poin', 'Nama_Poin', 'NmKuburan', 
+    'NTptIbadah', 'NmSekolahn', 'Nama_Salon', 'NmUmkm', 'NamaLapang', 'REMARK', 'FGSGOV'
+  ];
+  
+  for (let field of nameFields) {
+    if (properties[field]) {
+      return convertKantorToBalai(properties[field]);
+    }
+  }
+  
+  for (let key in properties) {
+    if (properties[key] && properties[key] !== null && properties[key] !== '' && 
+        !['full_id','osm_id','osm_type','id','fid','FCODE','SRS_ID','LCODE','METADATA','SHAPE_Leng','SHAPE_Area','AQDATE','PUDATE','KODLCO'].includes(key)) {
+      return convertKantorToBalai(properties[key]);
+    }
+  }
+  
+  return null;
+}
+
 function generatePopup(props, layerName) {
   const fieldLabels = {
-    'Nama_Toko': 'Nama Toko',
-    'Nama_Sekol': 'Nama Sekolah',
-    'Nama_Tempa': 'Nama Tempat',
-    'Nama_Dusun': 'Nama Dusun',
-    'Nama Tempat': 'Nama',
-    'Nama Dusun': 'Nama',
-    'NAMADS': 'Nama Desa',
-    'NAMOBJ': 'Nama Objek',
-    'NmWahana': 'Nama Wahana',
-    'NmPasar': 'Nama Pasar',
-    'NmPomMini': 'Nama Pom Mini',
-    'Nama_Rumah': 'Nama Rumah',
-    'NmToko': 'Nama Toko',
-    'Nama_TPQ': 'Nama TPQ',
-    'Nama_poin': 'Nama',
-    'Nama_Poin': 'Nama',
-    'NmKuburan': 'Nama Kuburan',
-    'NTptIbadah': 'Nama Tempat Ibadah',
-    'NmSekolahn': 'Nama Sekolah',
-    'Nama_Salon': 'Nama Salon',
-    'NmUmkm': 'Nama UMKM',
-    'NamaLapang': 'Nama Lapangan',
-    'FGSGOV': 'Jenis Pemerintahan',
-    'REMARK': 'Keterangan',
-    'LUASWH': 'Luas Wilayah',
-    'KC': 'Kecamatan',
-    'KAB': 'Kabupaten',
-    'PROV': 'Provinsi',
-    'NAMA KDESA': 'Nama Kepala Desa',
-    'NamaCamat': 'Nama Camat',
-    'LuasWilayh': 'Luas Wilayah'
+    'Nama_Toko': 'Nama Toko', 'Nama_Sekol': 'Nama Sekolah', 'Nama_Tempa': 'Nama Tempat', 
+    'Nama_Dusun': 'Nama Dusun', 'Nama Tempat': 'Nama', 'Nama Dusun': 'Nama', 
+    'NAMADS': 'Nama Desa', 'NAMOBJ': 'Nama Objek', 'NmWahana': 'Nama Wahana', 
+    'NmPasar': 'Nama Pasar', 'NmPomMini': 'Nama Pom Mini', 'Nama_Rumah': 'Nama Rumah', 
+    'NmToko': 'Nama Toko', 'Nama_TPQ': 'Nama TPQ', 'Nama_poin': 'Nama', 
+    'Nama_Poin': 'Nama', 'NmKuburan': 'Nama Kuburan', 'NTptIbadah': 'Nama Tempat Ibadah', 
+    'NmSekolahn': 'Nama Sekolah', 'Nama_Salon': 'Nama Salon', 'NmUmkm': 'Nama UMKM', 
+    'NamaLapang': 'Nama Lapangan', 'FGSGOV': 'Jenis Pemerintahan', 'REMARK': 'Keterangan', 
+    'LUASWH': 'Luas Wilayah', 'KC': 'Kecamatan', 'KAB': 'Kabupaten', 'PROV': 'Provinsi', 
+    'NAMA KDESA': 'Nama Kepala Desa', 'NamaCamat': 'Nama Camat', 'LuasWilayh': 'Luas Wilayah'
   };
   
   const iconEmoji = {
-    'RumahSayaFarizFikri':'🏠','LayananKesehatan':'🏥','Pemerintahan':'🏛️','Kuburan':'⚰️',
-    'Bengkel':'🔧','Rumah':'🏘️','Sekolahan':'🏫','TempatIbadah':'🕌',
-    'Salon':'💇','Toko':'🏪','TPQ':'📖','Umkm':'🏭','Kecamatan':'📍',
-    'BatasWilayah':'🗺️','Sawah':'🌾','Dusun':'🏞️','Kebun':'🌳',
-    'Ladang':'🌾','Pemukiman':'🏘️','Bangunan':'🏠','Sungai':'🌊','Jalan':'🛣️',
-    'TempatWisata':'🎡','Lapangan':'⚽','Pasar':'🏪','PomMini':'⛽','Toponimi':'📌',
-    'SemakBelukar':'🌿'
+    'RumahSayaFarizFikri': '🏠', 'LayananKesehatan': '🏥', 'Pemerintahan': '🏛️', 
+    'Kuburan': '⚰️', 'Bengkel': '🔧', 'Rumah': '🏘️', 'Sekolahan': '🏫', 
+    'TempatIbadah': '🕌', 'Salon': '💇', 'Toko': '🏪', 'TPQ': '📖', 'Umkm': '🏭', 
+    'Kecamatan': '📍', 'BatasWilayah': '🗺️', 'Sawah': '🌾', 'Dusun': '🏞️', 
+    'Kebun': '🌳', 'Ladang': '🌾', 'Pemukiman': '🏘️', 'Bangunan': '🏠', 
+    'Sungai': '🌊', 'Jalan': '🛣️', 'TempatWisata': '🎡', 'Lapangan': '⚽', 
+    'Pasar': '🏪', 'PomMini': '⛽', 'Toponimi': '📌', 'SemakBelukar': '🌿'
+  };
+  
+  const layerLabels = {
+    'RumahSayaFarizFikri': 'Rumah Saya', 'LayananKesehatan': 'Layanan Kesehatan', 
+    'Pemerintahan': 'Balai Desa', 'Kuburan': 'Kuburan', 'Bengkel': 'Bengkel', 
+    'Rumah': 'Rumah', 'Sekolahan': 'Sekolah', 'TempatIbadah': 'Tempat Ibadah', 
+    'Salon': 'Salon', 'Toko': 'Toko', 'TPQ': 'TPQ', 'Umkm': 'UMKM', 
+    'Kecamatan': 'Kecamatan', 'BatasWilayah': 'Batas Wilayah', 'Sawah': 'Sawah', 
+    'Dusun': 'Batas Desa', 'Kebun': 'Kebun', 'Ladang': 'Ladang', 
+    'Pemukiman': 'Pemukiman', 'Bangunan': 'Bangunan', 'Sungai': 'Sungai', 
+    'Jalan': 'Jalan', 'TempatWisata': 'Tempat Wisata', 'Lapangan': 'Lapangan', 
+    'Pasar': 'Pasar', 'PomMini': 'Pom Mini', 'Toponimi': 'Toponimi', 
+    'SemakBelukar': 'Semak Belukar'
   };
   
   const icon = iconEmoji[layerName] || '📍';
-  
-  const layerLabels = {
-    'RumahSayaFarizFikri':'Rumah Saya','LayananKesehatan':'Layanan Kesehatan','Pemerintahan':'Pemerintahan',
-    'Kuburan':'Kuburan','Bengkel':'Bengkel','Rumah':'Rumah','Sekolahan':'Sekolah',
-    'TempatIbadah':'Tempat Ibadah','Salon':'Salon','Toko':'Toko','TPQ':'TPQ',
-    'Umkm':'UMKM','Kecamatan':'Kecamatan','BatasWilayah':'Batas Wilayah','Sawah':'Sawah',
-    'Dusun':'Batas Desa','Kebun':'Kebun','Ladang':'Ladang','Pemukiman':'Pemukiman',
-    'Bangunan':'Bangunan','Sungai':'Sungai','Jalan':'Jalan',
-    'TempatWisata':'Tempat Wisata','Lapangan':'Lapangan','Pasar':'Pasar','PomMini':'Pom Mini',
-    'Toponimi':'Toponimi','SemakBelukar':'Semak Belukar'
-  };
-  
   const layerLabel = layerLabels[layerName] || layerName;
   
-  let html = `
-    <div style="min-width:220px; font-family: 'Segoe UI', sans-serif;">
-      <div style="background: linear-gradient(135deg, #1a5490, #2575fc); color: white; padding: 12px; margin: -15px -20px 12px -20px; border-radius: 8px 8px 0 0;">
-        <div style="font-size: 24px; margin-bottom: 4px;">${icon}</div>
-        <div style="font-weight: 700; font-size: 15px;">${layerLabel}</div>
-      </div>
-      <div style="padding: 4px 0;">
-  `;
+  let html = `<div style="min-width:220px;font-family:'Segoe UI',sans-serif">
+    <div style="background:linear-gradient(135deg,#1a5490,#2575fc);color:white;padding:12px;margin:-15px -20px 12px -20px;border-radius:8px 8px 0 0">
+      <div style="font-size:24px;margin-bottom:4px">${icon}</div>
+      <div style="font-weight:700;font-size:15px">${layerLabel}</div>
+    </div>
+    <div style="padding:4px 0">`;
   
   const excludeFields = ['full_id', 'osm_id', 'osm_type', 'id', 'fid', 'FCODE', 'SRS_ID', 'LCODE', 'METADATA', 'SHAPE_Leng', 'SHAPE_Area', 'AQDATE', 'PUDATE', 'KODLCO'];
-  
   let hasContent = false;
+  
   for (let k in props) {
     if (!props.hasOwnProperty(k)) continue;
-    const v = props[k];
-    
+    let v = props[k];
     if (v === null || v === '' || excludeFields.includes(k)) continue;
     
+    v = convertKantorToBalai(v);
     let label = fieldLabels[k] || k.replace(/_/g, ' ');
-    
-    html += `
-      <div style="margin-bottom: 8px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #2575fc;">
-        <div style="font-size: 11px; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">${label}</div>
-        <div style="font-weight: 600; font-size: 14px; color: #2c3e50;">${v}</div>
-      </div>
-    `;
+    html += `<div style="margin-bottom:8px;padding:8px;background:#f8f9fa;border-radius:6px;border-left:3px solid #2575fc">
+      <div style="font-size:11px;color:#6c757d;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">${label}</div>
+      <div style="font-weight:600;font-size:14px;color:#2c3e50">${v}</div>
+    </div>`;
     hasContent = true;
   }
   
   if (!hasContent) {
-    html += `<div style="color: #6c757d; font-style: italic; text-align: center; padding: 10px;">Tidak ada informasi detail</div>`;
+    html += `<div style="color:#6c757d;font-style:italic;text-align:center;padding:10px">Tidak ada informasi detail</div>`;
   }
   
   html += '</div></div>';
   return html;
 }
 
-/* Add layer helper */
 function addLayerToMap(name, data, style) {
   if (typeof data === 'undefined') return;
+  
   const layer = L.geoJSON(data, {
     style: typeof style === 'function' ? style : () => style,
     pointToLayer: (f, latlng) => {
@@ -491,114 +756,175 @@ function addLayerToMap(name, data, style) {
       }
       
       const iconEmoji = {
-        'RumahSayaFarizFikri':'🏠','LayananKesehatan':'🏥','Pemerintahan':'🏛️','Kuburan':'⚰️',
-        'Bengkel':'🔧','Rumah':'🏘️','Sekolahan':'🏫','TempatIbadah':'🕌',
-        'Salon':'💇','Toko':'🏪','TPQ':'📖','Umkm':'🏭','Kecamatan':'📍',
-        'TempatWisata':'🎡','Lapangan':'⚽','Pasar':'🏪','PomMini':'⛽','Toponimi':'📌'
+        'RumahSayaFarizFikri': '🏠', 'LayananKesehatan': '🏥', 'Pemerintahan': '🏛️',
+        'Kuburan': '⚰️', 'Bengkel': '🔧', 'Rumah': '🏘️', 'Sekolahan': '🏫',
+        'TempatIbadah': '🕌', 'Salon': '💇', 'Toko': '🏪', 'TPQ': '📖', 
+        'Umkm': '🏭', 'Kecamatan': '📍', 'TempatWisata': '🎡', 
+        'Lapangan': '⚽', 'Pasar': '🏪', 'PomMini': '⛽', 'Toponimi': '📌'
       };
-      const html = `<div style="font-size:14px;text-shadow:0 2px 6px rgba(0,0,0,0.3)">${iconEmoji[name]||'📍'}</div>`;
-      return L.marker(latlng, { icon: L.divIcon({ html, className:'', iconSize:[20,20], iconAnchor:[10,20] })});
+      
+      const html = `<div style="font-size:18px;text-shadow:0 2px 6px rgba(0,0,0,0.3)">${iconEmoji[name]||'📍'}</div>`;
+      return L.marker(latlng, { 
+        icon: L.divIcon({ 
+          html, 
+          className: 'custom-marker-icon', 
+          iconSize: [24, 24], 
+          iconAnchor: [12, 24],
+          popupAnchor: [0, -24]
+        })
+      });
     },
     onEachFeature: (feat, layerLeaf) => {
       if (feat.properties) {
-        layerLeaf.bindPopup(generatePopup(feat.properties, name), {
-          maxWidth: 300,
-          className: 'custom-popup'
+        layerLeaf.bindPopup(generatePopup(feat.properties, name), { 
+          maxWidth: 300, 
+          className: 'custom-popup' 
         });
         
-        // Add permanent label for Dusun layer - ALWAYS VISIBLE
+        if (feat.geometry && feat.geometry.type === 'Point') {
+          const labelText = getFeatureName(feat.properties);
+          if (labelText && labelText.length > 0) {
+            const latlng = layerLeaf.getLatLng();
+            const displayText = labelText.length > 25 ? labelText.substring(0, 22) + '...' : labelText;
+            const iconConfig = customIconConfig[name];
+            const iconSize = iconConfig ? iconConfig.size[0] : 24;
+            const labelOffsetX = iconSize / 2 + 3;
+            
+            const label = L.marker(latlng, {
+              icon: L.divIcon({
+                html: `<div style="
+                  position: absolute;
+                  left: ${labelOffsetX}px;
+                  top: 300%;
+                  transform: translateY(-100%);
+                  background: #ffffff;
+                  box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.2);
+                  padding: 3px 7px;
+                  border-radius: 3px;
+                  font-family: 'Roboto', Arial, sans-serif;
+                  font-size: 11px;
+                  font-weight: 500;
+                  color: #1a1a1a;
+                  white-space: nowrap;
+                  letter-spacing: 0.3px;
+                  width: fit-content;
+                  max-width: 140px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  line-height: 14px;
+                ">${displayText}</div>`,
+                className: '',
+                iconSize: [0, 0],
+                iconAnchor: [0, 0]
+              }),
+              interactive: false,
+              zIndexOffset: -1000
+            });
+            
+            if (!pointLabels[name]) {
+              pointLabels[name] = L.layerGroup();
+            }
+            pointLabels[name].addLayer(label);
+          }
+        }
+        
         if (name === 'Dusun' && feat.properties['NAMADS']) {
-          const label = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'dusun-label',
-            opacity: 1
-          }).setContent(feat.properties['NAMADS']);
-          layerLeaf.bindTooltip(label);
+          const center = layerLeaf.getBounds().getCenter();
+          const label = L.marker(center, {
+            icon: L.divIcon({
+              className: 'dusun-label',
+              html: feat.properties['NAMADS'],
+              iconSize: [100, 40],
+              iconAnchor: [50, 20]
+            }),
+            interactive: false
+          });
+          
+          if (!layers['DusunLabels']) {
+            layers['DusunLabels'] = L.layerGroup();
+          }
+          layers['DusunLabels'].addLayer(label);
         }
         
         if (feat.geometry && feat.geometry.type !== 'Point') {
-        
-        // Add permanent label for Dusun layer - ALWAYS VISIBLE
-        if (name === 'Dusun' && feat.properties['NAMADS']) {
-          const label = L.tooltip({
-            permanent: true,
-            direction: 'center',
-            className: 'dusun-label',
-            opacity: 1
-          }).setContent(feat.properties['NAMADS']);
-          layerLeaf.bindTooltip(label);
-        }
-          layerLeaf.on('mouseover', () => layerLeaf.setStyle && layerLeaf.setStyle({ fillOpacity: 0.8, fillColor: '#fff3a8' }));
+          layerLeaf.on('mouseover', () => {
+            if (layerLeaf.setStyle) {
+              layerLeaf.setStyle({ fillOpacity: 0.8, fillColor: '#fff3a8' });
+            }
+          });
+          
           layerLeaf.on('mouseout', () => {
-            applyZoomRendering();
+            if (layerLeaf.setStyle) {
+              const cfg = layerConfigs.find(c => c.name === name);
+              if (cfg && cfg.style) {
+                const originalStyle = typeof cfg.style === 'function' ? 
+                  cfg.style(feat) : cfg.style;
+                layerLeaf.setStyle(originalStyle);
+              }
+            }
+            updateLayerTransparency(name);
           });
         }
+        
         allFeatures.push({ layer: layerLeaf, properties: feat.properties, layerName: name });
       }
     }
-  }).addTo(map);
+  });
+  
   layers[name] = layer;
 }
 
-/* LAYER CONFIGS */
 const layerConfigs = [
-  { name:'BatasWilayah', varName:'json_BatasWilayahKecamatanRakit_1', style:baseStyles.BatasWilayah, iconImg:'../images/IconLayer/BatasWilayah.png', label:'Batas Wilayah', type:'line' },
-  { name:'Sawah', varName:'json_Sawah_4', style:baseStyles.Sawah, iconImg:'../images/IconLayer/Sawah.png', label:'Sawah', type:'polygon' },
-  { name:'Dusun', varName:'json_BatasDesaSatuKecamatan_8', style:baseStyles.Dusun, iconImg:'../images/IconLayer/BatasWilayah.png', label:'Batas Desa', type:'polygon' },
-  { name:'Kebun', varName:'json_Kebun_7', style:baseStyles.Kebun, iconImg:'../images/IconLayer/Kebun dan Ladang.png', label:'Kebun', type:'polygon' },
-  { name:'Ladang', varName:'json_Ladang_5', style:baseStyles.Ladang, iconImg:'../images/IconLayer/Kebun dan Ladang.png', label:'Ladang', type:'polygon' },
-  { name:'SemakBelukar', varName:'json_SemakBelukar_6', style:baseStyles.SemakBelukar, iconImg:'../images/IconLayer/Kebun dan Ladang.png', label:'Semak Belukar', type:'polygon' },
-  { name:'Pemukiman', varName:'json_PemukimanWarga_3', style:baseStyles.Pemukiman, iconImg:'../images/IconLayer/Pemukiman dan Bangunan.png', label:'Pemukiman', type:'polygon' },
-  { name:'Bangunan', varName:'json_TiapRumah_2', style:baseStyles.TiapRumah, iconImg:'../images/IconLayer/Pemukiman dan Bangunan.png', label:'Bangunan', type:'polygon' },
-  { name:'RumahSayaFarizFikri', varName:'json_RumahSayaFarizFikri_24', style:null, iconImg:'../images/IconMap/RumahSayaFarizFikri.png', label:'Rumah Saya', type:'point' },
-  { name:'LayananKesehatan', varName:'json_LayananKesehatan_19', style:null, iconImg:'../images/IconMap/LayananKesehatan.png', label:'Layanan Kesehatan', type:'point' },
-  { name:'Pemerintahan', varName:'json_Pemerintahan_12', style:null, iconImg:'../images/IconMap/Pemerintahan.png', label:'Pemerintahan', type:'point' },
-  { name:'Kuburan', varName:'json_Kuburan_21', style:null, iconImg:'../images/IconMap/Kuburan.png', label:'Kuburan', type:'point' },
-  { name:'Bengkel', varName:'json_Bengkel_20', style:null, iconImg:'../images/IconMap/Bengkel.png', label:'Bengkel', type:'point' },
-  { name:'Rumah', varName:'json_Rumah_16', style:null, iconImg:'../images/IconMap/Rumah.png', label:'Rumah', type:'point' },
-  { name:'Sekolahan', varName:'json_Sekolahan_23', style:null, iconImg:'../images/IconMap/Sekolahan.png', label:'Sekolah', type:'point' },
-  { name:'TempatIbadah', varName:'json_TempatIbadah_22', style:null, iconImg:'../images/IconMap/TempatIbadah.png', label:'Tempat Ibadah', type:'point' },
-  { name:'Salon', varName:'json_Salon_25', style:null, iconImg:'../images/IconMap/Salon.png', label:'Salon', type:'point' },
-  { name:'Toko', varName:'json_Toko_17', style:null, iconImg:'../images/IconMap/Toko.png', label:'Toko', type:'point' },
-  { name:'TPQ', varName:'json_TPQ_18', style:null, iconImg:'../images/IconMap/Tpq.png', label:'TPQ', type:'point' },
-  { name:'Umkm', varName:'json_Umkm_26', style:null, iconImg:'../images/IconMap/Umkm.png', label:'UMKM', type:'point' },
-  { name:'TempatWisata', varName:'json_TempatWisata_11', style:null, iconImg:'../images/IconMap/TempatWisata.png', label:'Tempat Wisata', type:'point' },
-  { name:'Lapangan', varName:'json_Lapangan_13', style:null, iconImg:'../images/IconMap/Lapangan.png', label:'Lapangan', type:'point' },
-  { name:'Pasar', varName:'json_Pasar_14', style:null, iconImg:'../images/IconMap/Pasar.png', label:'Pasar', type:'point' },
-  { name:'PomMini', varName:'json_PomMini_15', style:null, iconImg:'../images/IconMap/PomMini.png', label:'Pom Mini', type:'point' },
-  { name:'Toponimi', varName:'json_Toponimi_27', style:null, iconImg:'../images/IconMap/Toponimi.png', label:'Toponimi', type:'point' },
-  { name:'Sungai', varName:'json_Sungai_9', style:baseStyles.Sungai, iconImg:'../images/IconLayer/Sungai.png', label:'Sungai', type:'line' },
-  { name:'Jalan', varName:'json_Jalan_10', style:baseStyles.Jalan, iconImg:'../images/IconLayer/Jalan.png', label:'Jalan', type:'line' },
-  { name:'Kecamatan', varName:'json_Kecamatan_28', style:null, iconImg:'../images/IconMap/Poin Desa dan Kecamatan.png', label:'Kecamatan', type:'point' }
+  { name:'BatasWilayah', varName:'json_BatasWilayahKecamatanRakit_1', style:baseStyles.BatasWilayah, iconImg:'../images/IconLayer/BatasWilayah.png', label:'Batas Wilayah', type:'line', zoomLevel:12 },
+  { name:'Dusun', varName:'json_BatasDesaSatuKecamatan_8', style:baseStyles.Dusun, iconImg:'../images/IconLayer/BatasWilayah.png', label:'Batas Desa', type:'polygon', zoomLevel:13 },
+  { name:'Jalan', varName:'json_Jalan_10', style:baseStyles.Jalan, iconImg:'../images/IconLayer/Jalan.png', label:'Jalan', type:'line', zoomLevel:13 },
+  { name:'Sungai', varName:'json_Sungai_9', style:baseStyles.Sungai, iconImg:'../images/IconLayer/Sungai.png', label:'Sungai', type:'line', zoomLevel:13 },
+  { name:'Pemerintahan', varName:'json_Pemerintahan_12', style:null, iconImg:'../images/IconMap/Pemerintahan.png', label:'Balai Desa', type:'point', zoomLevel:13 },
+  { name:'Bangunan', varName:'json_TiapRumah_2', style:baseStyles.TiapRumah, iconImg:'../images/IconLayer/Pemukiman dan Bangunan.png', label:'Bangunan', type:'polygon', zoomLevel:16 },
+  { name:'Pemukiman', varName:'json_PemukimanWarga_3', style:baseStyles.Pemukiman, iconImg:'../images/IconLayer/Pemukiman dan Bangunan.png', label:'Pemukiman', type:'polygon', zoomLevel:16 },
+  { name:'SemakBelukar', varName:'json_SemakBelukar_6', style:baseStyles.SemakBelukar, iconImg:'../images/IconLayer/Kebun dan Ladang.png', label:'Semak Belukar', type:'polygon', zoomLevel:17 },
+  { name:'Sawah', varName:'json_Sawah_4', style:baseStyles.Sawah, iconImg:'../images/IconLayer/Sawah.png', label:'Sawah', type:'polygon', zoomLevel:17 },
+  { name:'Ladang', varName:'json_Ladang_5', style:baseStyles.Ladang, iconImg:'../images/IconLayer/Kebun dan Ladang.png', label:'Ladang', type:'polygon', zoomLevel:17 },
+  { name:'Kebun', varName:'json_Kebun_7', style:baseStyles.Kebun, iconImg:'../images/IconLayer/Kebun dan Ladang.png', label:'Kebun', type:'polygon', zoomLevel:17 },
+  { name:'Kecamatan', varName:'json_Kecamatan_28', style:null, iconImg:'../images/IconMap/Poin Desa dan Kecamatan.png', label:'Kecamatan', type:'point', zoomLevel:2, maxZoomLevel:11 },
+  { name:'Toponimi', varName:'json_Toponimi_27', style:null, iconImg:'../images/IconMap/Toponimi.png', label:'Toponimi', type:'point', zoomLevel:15 },
+  { name:'RumahSayaFarizFikri', varName:'json_RumahSayaFarizFikri_24', style:null, iconImg:'../images/IconMap/RumahSayaFarizFikri.png', label:'Rumah Saya', type:'point', zoomLevel:17 },
+  { name:'LayananKesehatan', varName:'json_LayananKesehatan_19', style:null, iconImg:'../images/IconMap/LayananKesehatan.png', label:'Layanan Kesehatan', type:'point', zoomLevel:17 },
+  { name:'Kuburan', varName:'json_Kuburan_21', style:null, iconImg:'../images/IconMap/Kuburan.png', label:'Kuburan', type:'point', zoomLevel:17 },
+  { name:'Bengkel', varName:'json_Bengkel_20', style:null, iconImg:'../images/IconMap/Bengkel.png', label:'Bengkel', type:'point', zoomLevel:17 },
+  { name:'Rumah', varName:'json_Rumah_16', style:null, iconImg:'../images/IconMap/Rumah.png', label:'Rumah', type:'point', zoomLevel:17 },
+  { name:'Sekolahan', varName:'json_Sekolahan_23', style:null, iconImg:'../images/IconMap/Sekolahan.png', label:'Sekolah', type:'point', zoomLevel:17 },
+  { name:'TempatIbadah', varName:'json_TempatIbadah_22', style:null, iconImg:'../images/IconMap/TempatIbadah.png', label:'Tempat Ibadah', type:'point', zoomLevel:17 },
+  { name:'Salon', varName:'json_Salon_25', style:null, iconImg:'../images/IconMap/Salon.png', label:'Salon', type:'point', zoomLevel:17 },
+  { name:'Toko', varName:'json_Toko_17', style:null, iconImg:'../images/IconMap/Toko.png', label:'Toko', type:'point', zoomLevel:17 },
+  { name:'TPQ', varName:'json_TPQ_18', style:null, iconImg:'../images/IconMap/Tpq.png', label:'TPQ', type:'point', zoomLevel:17 },
+  { name:'Umkm', varName:'json_Umkm_26', style:null, iconImg:'../images/IconMap/Umkm.png', label:'UMKM', type:'point', zoomLevel:17 },
+  { name:'TempatWisata', varName:'json_TempatWisata_11', style:null, iconImg:'../images/IconMap/TempatWisata.png', label:'Tempat Wisata', type:'point', zoomLevel:17 },
+  { name:'Lapangan', varName:'json_Lapangan_13', style:null, iconImg:'../images/IconMap/Lapangan.png', label:'Lapangan', type:'point', zoomLevel:17 },
+  { name:'Pasar', varName:'json_Pasar_14', style:null, iconImg:'../images/IconMap/Pasar.png', label:'Pasar', type:'point', zoomLevel:17 },
+  { name:'PomMini', varName:'json_PomMini_15', style:null, iconImg:'../images/IconMap/PomMini.png', label:'Pom Mini', type:'point', zoomLevel:17 }
 ];
 
-/* Build sidebar HTML and load layers */
 const sidebarEl = document.getElementById('layerControl');
-let html = `
-  <div class="layer-group">
-    <div class="layer-group-title"><i class="fas fa-map"></i>&nbsp; Base Map</div>
-    <div class="layer-item" data-base="sat">
-      <input type="radio" name="basemap" id="base-sat" checked />
-      <label for="base-sat" style="margin-left:6px; flex: 1;">Google Satellite</label>
-    </div>
-    <div class="layer-item" data-base="ter">
-      <input type="radio" name="basemap" id="base-ter" />
-      <label for="base-ter" style="margin-left:6px; flex: 1;">Google Terrain</label>
-    </div>
-    <div class="layer-item" data-base="maps">
-      <input type="radio" name="basemap" id="base-maps" />
-      <label for="base-maps" style="margin-left:6px; flex: 1;">Google Maps</label>
-    </div>
+let html = `<div class="layer-group">
+  <div class="layer-group-title"><i class="fas fa-map"></i>&nbsp; Base Map</div>
+  <div class="layer-item" data-base="sat">
+    <input type="radio" name="basemap" id="base-sat" checked />
+    <label for="base-sat" style="margin-left:6px; flex: 1;">Google Satellite</label>
   </div>
-  <div class="layer-group"><div class="layer-group-title"><i class="fas fa-layer-group"></i>&nbsp; Layer Peta</div>
-`;
+  <div class="layer-item" data-base="ter">
+    <input type="radio" name="basemap" id="base-ter" />
+    <label for="base-ter" style="margin-left:6px; flex: 1;">Google Terrain</label>
+  </div>
+  <div class="layer-item" data-base="maps">
+    <input type="radio" name="basemap" id="base-maps" />
+    <label for="base-maps" style="margin-left:6px; flex: 1;">Google Maps</label>
+  </div>
+</div>
+<div class="layer-group"><div class="layer-group-title"><i class="fas fa-layer-group"></i>&nbsp; Layer Peta</div>`;
 
 layerConfigs.forEach(cfg => {
-  const iconDisplay = cfg.iconImg 
-    ? `<img src="${cfg.iconImg}" alt="${cfg.label}" />`
-    : cfg.icon;
-  
+  const iconDisplay = cfg.iconImg ? `<img src="${cfg.iconImg}" alt="${cfg.label}" />` : '';
   html += `<div class="layer-item" data-layer="${cfg.name}">
     <input type="checkbox" class="layer-checkbox" id="layer-${cfg.name}" checked style="width:15px;height:15px"/>
     <div class="icon">${iconDisplay}</div>
@@ -613,34 +939,33 @@ layerConfigs.forEach(cfg => {
     console.warn('error loading layer', cfg.name, e);
   }
 });
+
 html += '</div>';
 sidebarEl.innerHTML = html;
 
-/* Wire controls */
 function wireControls() {
   document.querySelectorAll('.layer-item[data-layer]').forEach(item => {
     const cb = item.querySelector('.layer-checkbox');
-    const layerName = item.getAttribute('data-layer');
-    cb.addEventListener('change', () => {
-      applyZoomRendering();
-    });
+    cb.addEventListener('change', () => { applyZoomRendering(); });
   });
 
-  document.getElementById('base-sat').addEventListener('change', function(){
+  document.getElementById('base-sat').addEventListener('change', function() {
     if (this.checked) { 
       map.hasLayer(googleTerrain) && map.removeLayer(googleTerrain);
       map.hasLayer(googleMaps) && map.removeLayer(googleMaps);
       map.addLayer(googleSatellite); 
     }
   });
-  document.getElementById('base-ter').addEventListener('change', function(){
+  
+  document.getElementById('base-ter').addEventListener('change', function() {
     if (this.checked) { 
       map.hasLayer(googleSatellite) && map.removeLayer(googleSatellite);
       map.hasLayer(googleMaps) && map.removeLayer(googleMaps);
       map.addLayer(googleTerrain); 
     }
   });
-  document.getElementById('base-maps').addEventListener('change', function(){
+  
+  document.getElementById('base-maps').addEventListener('change', function() {
     if (this.checked) { 
       map.hasLayer(googleSatellite) && map.removeLayer(googleSatellite);
       map.hasLayer(googleTerrain) && map.removeLayer(googleTerrain);
@@ -648,23 +973,26 @@ function wireControls() {
     }
   });
 }
+
 wireControls();
 
-/* Toggle sidebar */
 const sidebar = document.getElementById('sidebar');
 const toggleBtn = document.getElementById('toggleSidebarBtn');
+
 toggleBtn.addEventListener('click', () => {
   sidebar.classList.toggle('collapsed');
-  setTimeout(()=> map.invalidateSize(), 400);
+  setTimeout(() => map.invalidateSize(), 400);
 });
 
-/* Controls */
-document.getElementById('btnZoomIn').addEventListener('click', ()=> map.zoomIn());
-document.getElementById('btnZoomOut').addEventListener('click', ()=> map.zoomOut());
-document.getElementById('btnHome').addEventListener('click', ()=> map.fitBounds([[-7.464409714589333,109.49804129927823],[-7.369025692250146,109.59828014712491]]));
-document.getElementById('btnLocate').addEventListener('click', ()=> map.locate({ setView:true, maxZoom:16 }));
+document.getElementById('btnZoomIn').addEventListener('click', () => map.zoomIn());
+document.getElementById('btnZoomOut').addEventListener('click', () => map.zoomOut());
+document.getElementById('btnHome').addEventListener('click', () => {
+  map.fitBounds([[-7.464409714589333,109.49804129927823],[-7.369025692250146,109.59828014712491]]);
+});
+document.getElementById('btnLocate').addEventListener('click', () => {
+  map.locate({ setView: true, maxZoom: 16 });
+});
 
-/* Mouse coords */
 map.on('mousemove', e => {
   document.getElementById('coords').innerText = `Lat: ${e.latlng.lat.toFixed(5)} | Lng: ${e.latlng.lng.toFixed(5)}`;
 });
@@ -673,28 +1001,8 @@ map.on('locationfound', e => {
   L.marker(e.latlng).addTo(map).bindPopup('📍 Anda di sini').openPopup();
 });
 
-/* Search */
 const searchBox = document.getElementById('searchBox');
 const suggestionsBox = document.getElementById('searchSuggestions');
-
-function getFeatureName(properties) {
-  const nameFields = ['Nama', 'name', 'NAMOBJ', 'NAMADS', 'NmWahana', 'NmPasar', 'NmPomMini', 'Nama_Rumah', 'NmToko', 'Nama_TPQ', 'Nama_poin', 'Nama_Poin', 'NmKuburan', 'NTptIbadah', 'NmSekolahn', 'Nama_Salon', 'NmUmkm', 'NamaLapang'];
-  
-  for (let field of nameFields) {
-    if (properties[field]) {
-      return properties[field];
-    }
-  }
-  
-  for (let key in properties) {
-    if (properties[key] && properties[key] !== null && properties[key] !== '' && 
-        !['full_id','osm_id','osm_type','id','fid','FCODE','SRS_ID','LCODE','METADATA'].includes(key)) {
-      return properties[key];
-    }
-  }
-  
-  return 'Tanpa Nama';
-}
 
 searchBox.addEventListener('input', function(e) {
   const term = e.target.value.trim().toLowerCase();
@@ -705,13 +1013,39 @@ searchBox.addEventListener('input', function(e) {
   }
   
   const matches = allFeatures.filter(it => {
-    return Object.values(it.properties||{}).some(v => String(v).toLowerCase().includes(term));
+    return Object.values(it.properties || {}).some(v => {
+      let searchVal = String(v).toLowerCase();
+      
+      if (term.includes('balai')) {
+        if (searchVal.includes('kantor kepala desa') || 
+            searchVal.includes('kantor kelurahan') ||
+            searchVal.includes('kantor desa')) {
+          return true;
+        }
+      }
+      
+      if (term.includes('kantor')) {
+        if (searchVal.includes('kantor kepala desa') || 
+            searchVal.includes('kantor kelurahan') ||
+            searchVal.includes('kantor desa')) {
+          return true;
+        }
+      }
+      
+      for (let desa of Object.keys(desaMapping)) {
+        if (term.includes(desa.toLowerCase()) && searchVal.includes('kantor')) {
+          return true;
+        }
+      }
+      
+      return searchVal.includes(term);
+    });
   });
   
   if (matches.length > 0) {
     let html = '';
     matches.slice(0, 10).forEach(match => {
-      const name = getFeatureName(match.properties);
+      const name = getFeatureName(match.properties) || 'Tanpa Nama';
       const type = match.layerName;
       const icon = getIconForLayer(type);
       
@@ -741,13 +1075,14 @@ searchBox.addEventListener('input', function(e) {
 
 function getIconForLayer(layerName) {
   const icons = {
-    'RumahSayaFarizFikri':'🏠','LayananKesehatan':'🏥','Pemerintahan':'🏛️','Kuburan':'⚰️',
-    'Bengkel':'🔧','Rumah':'🏘️','Sekolahan':'🏫','TempatIbadah':'🕌',
-    'Salon':'💇','Toko':'🏪','TPQ':'📖','Umkm':'🏭','Kecamatan':'📍',
-    'BatasWilayah':'🗺️','Sawah':'🌾','Dusun':'🏞️','Kebun':'🌳',
-    'Ladang':'🌾','Pemukiman':'🏘️','Bangunan':'🏠','Sungai':'🌊','Jalan':'🛣️',
-    'TempatWisata':'🎡','Lapangan':'⚽','Pasar':'🏪','PomMini':'⛽','Toponimi':'📌',
-    'SemakBelukar':'🌿'
+    'RumahSayaFarizFikri': '🏠', 'LayananKesehatan': '🏥', 'Pemerintahan': '🏛️',
+    'Kuburan': '⚰️', 'Bengkel': '🔧', 'Rumah': '🏘️', 'Sekolahan': '🏫',
+    'TempatIbadah': '🕌', 'Salon': '💇', 'Toko': '🏪', 'TPQ': '📖', 
+    'Umkm': '🏭', 'Kecamatan': '📍', 'BatasWilayah': '🗺️', 'Sawah': '🌾', 
+    'Dusun': '🏞️', 'Kebun': '🌳', 'Ladang': '🌾', 'Pemukiman': '🏘️', 
+    'Bangunan': '🏠', 'Sungai': '🌊', 'Jalan': '🛣️', 'TempatWisata': '🎡', 
+    'Lapangan': '⚽', 'Pasar': '🏪', 'PomMini': '⛽', 'Toponimi': '📌', 
+    'SemakBelukar': '🌿'
   };
   return icons[layerName] || '📍';
 }
@@ -755,7 +1090,7 @@ function getIconForLayer(layerName) {
 function zoomToFeature(feature) {
   const layer = feature.layer;
   if (layer.getBounds) {
-    map.fitBounds(layer.getBounds(), { maxZoom:18 });
+    map.fitBounds(layer.getBounds(), { maxZoom: 18 });
   } else if (layer.getLatLng) {
     map.setView(layer.getLatLng(), 18);
   }
@@ -774,29 +1109,17 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-/* Attribution */
-L.control.attribution({ position:'bottomleft', prefix: '<a href="../index.html">Kecamatan Rakit</a> | Leaflet & QGIS' }).addTo(map);
+L.control.attribution({ 
+  position: 'bottomleft', 
+  prefix: '<a href="../index.html">Kecamatan Rakit</a> | Leaflet & QGIS' 
+}).addTo(map);
 
-/* PROGRESSIVE ZOOM RENDERING + DYNAMIC TRANSPARENCY */
-const zoomGroups = {
-  point: ['Kecamatan'],
-  boundary: ['BatasWilayah'],
-  desa: ['Dusun'], // Batas Desa dengan label
-  region: ['Pemerintahan','Sungai','Jalan'],
-  buildings: ['Bangunan','RumahSayaFarizFikri'],
-  details: [
-    'Sawah','Kebun','Ladang','Pemukiman','SemakBelukar','LayananKesehatan','Kuburan',
-    'Bengkel','Rumah','Sekolahan','TempatIbadah','Salon','Toko','TPQ','Umkm',
-    'TempatWisata','Lapangan','Pasar','PomMini','Toponimi'
-  ]
-};
-
-function isChecked(layerName){
+function isChecked(layerName) {
   const el = document.querySelector(`.layer-item[data-layer="${layerName}"] input`);
   return el ? el.checked : true;
 }
 
-function setLayerVisible(name, visible){
+function setLayerVisible(name, visible) {
   const lyr = layers[name];
   if (!lyr) return;
   
@@ -808,9 +1131,12 @@ function setLayerVisible(name, visible){
 }
 
 function getOpacityForZoom(zoom) {
-  if (zoom <= 15) return 0.6;
-  if (zoom <= 17) return 0.35;
-  return 0.2;
+  if (zoom <= 14) return 0.7;
+  if (zoom === 15) return 0.55;
+  if (zoom === 16) return 0.35;
+  if (zoom === 17) return 0.2;
+  if (zoom >= 18) return 0.08;
+  return 0.05;
 }
 
 function updateLayerTransparency(layerName) {
@@ -829,191 +1155,77 @@ function updateLayerTransparency(layerName) {
           newStyle.fillOpacity = opacity;
           layer.setStyle(newStyle);
         } else {
-          layer.setStyle({ fillOpacity: opacity });
+          const originalStyle = typeof cfg.style === 'function' ? 
+            cfg.style(layer.feature) : cfg.style;
+          layer.setStyle({ ...originalStyle, fillOpacity: opacity });
         }
       }
     }
   });
 }
 
-// Control label visibility based on zoom
-function updateDusunLabels(visible) {
-  const lyr = layers['Dusun'];
-  if (!lyr) return;
+function updatePointLabelsVisibility() {
+  const zoom = map.getZoom();
   
-  lyr.eachLayer(function(layer) {
-    if (layer.getTooltip) {
-      const tooltip = layer.getTooltip();
-      if (tooltip) {
-        if (visible) {
-          tooltip.setOpacity(1);
-        } else {
-          tooltip.setOpacity(0);
-        }
+  Object.keys(pointLabels).forEach(layerName => {
+    const labelGroup = pointLabels[layerName];
+    if (!labelGroup) return;
+    
+    const mainLayer = layers[layerName];
+    const cfg = layerConfigs.find(c => c.name === layerName);
+    
+    if (!mainLayer || !cfg) return;
+    
+    const poinShouldShow = zoom >= cfg.zoomLevel && (!cfg.maxZoomLevel || zoom <= cfg.maxZoomLevel);
+    const labelShouldShow = poinShouldShow && isChecked(layerName);
+    
+    if (labelShouldShow) {
+      if (!map.hasLayer(labelGroup)) {
+        map.addLayer(labelGroup);
+      }
+    } else {
+      if (map.hasLayer(labelGroup)) {
+        map.removeLayer(labelGroup);
       }
     }
   });
 }
 
-function applyZoomRendering(){
+function applyZoomRendering() {
   const z = map.getZoom();
 
-  // Level 1 (Zoom 2-10): Hanya point Kecamatan
-  if (z >= 2 && z < 11) {
-    zoomGroups.point.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    // Hide semua layer lain
-    zoomGroups.boundary.forEach(n => setLayerVisible(n, false));
-    zoomGroups.desa.forEach(n => setLayerVisible(n, false));
-    zoomGroups.region.forEach(n => setLayerVisible(n, false));
-    zoomGroups.buildings.forEach(n => setLayerVisible(n, false));
-    zoomGroups.details.forEach(n => setLayerVisible(n, false));
-    updateDusunLabels(false);
+  layerConfigs.forEach(cfg => {
+    let shouldShow = z >= cfg.zoomLevel && isChecked(cfg.name);
+    
+    if (cfg.maxZoomLevel !== undefined) {
+      shouldShow = shouldShow && z <= cfg.maxZoomLevel;
+    }
+    
+    setLayerVisible(cfg.name, shouldShow);
+    
+    if (shouldShow && cfg.type === 'polygon') {
+      updateLayerTransparency(cfg.name);
+    }
+  });
+  
+  if (layers['DusunLabels']) {
+    if (z >= 14 && isChecked('Dusun')) {
+      if (!map.hasLayer(layers['DusunLabels'])) {
+        map.addLayer(layers['DusunLabels']);
+      }
+    } else {
+      if (map.hasLayer(layers['DusunLabels'])) {
+        map.removeLayer(layers['DusunLabels']);
+      }
+    }
   }
-
-  // Level 2 (Zoom 11-12): Batas Wilayah + Poin Kecamatan
-  else if (z >= 11 && z < 12) {
-    // Show point Kecamatan
-    zoomGroups.point.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    
-    // Show Batas Wilayah
-    zoomGroups.boundary.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    
-    // Hide Batas Desa dan layer lainnya
-    zoomGroups.desa.forEach(n => setLayerVisible(n, false));
-    zoomGroups.region.forEach(n => setLayerVisible(n, false));
-    zoomGroups.buildings.forEach(n => setLayerVisible(n, false));
-    zoomGroups.details.forEach(n => setLayerVisible(n, false));
-    updateDusunLabels(false);
-  }
-
-  // Level 3 (Zoom 12-13): Batas Wilayah + Batas Desa + Label + Pemerintahan (RUNNING AWAL)
-  else if (z >= 12 && z < 14) {
-    // Hide point Kecamatan
-    zoomGroups.point.forEach(n => setLayerVisible(n, false));
-    
-    // Show Batas Wilayah
-    zoomGroups.boundary.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    
-    // Show Batas Desa dan labelnya
-    zoomGroups.desa.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    updateDusunLabels(true);
-    
-    // Show Pemerintahan saja
-    setLayerVisible('Pemerintahan', isChecked('Pemerintahan'));
-    
-    // Hide Jalan, Sungai
-    setLayerVisible('Jalan', false);
-    setLayerVisible('Sungai', false);
-    
-    zoomGroups.buildings.forEach(n => setLayerVisible(n, false));
-    zoomGroups.details.forEach(n => setLayerVisible(n, false));
-  }
-
-  // Level 4 (Zoom 14-15): + Jalan, Sungai
-  else if (z >= 14 && z < 16) {
-    // Hide point Kecamatan
-    zoomGroups.point.forEach(n => setLayerVisible(n, false));
-    
-    // Batas Wilayah tetap
-    zoomGroups.boundary.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    
-    // Batas Desa tetap ada
-    zoomGroups.desa.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    updateDusunLabels(true);
-    
-    // Semua region layers muncul (Pemerintahan, Jalan, Sungai)
-    zoomGroups.region.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    
-    // Hide buildings dan details
-    zoomGroups.buildings.forEach(n => setLayerVisible(n, false));
-    zoomGroups.details.forEach(n => setLayerVisible(n, false));
-  }
-
-  // Level 5 (Zoom 16): + Buildings
-  else if (z >= 16 && z < 17) {
-    // Hide point Kecamatan
-    zoomGroups.point.forEach(n => setLayerVisible(n, false));
-    
-    zoomGroups.boundary.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    
-    zoomGroups.desa.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    updateDusunLabels(true);
-    
-    zoomGroups.region.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    
-    // Buildings muncul
-    zoomGroups.buildings.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    
-    // Hide details
-    zoomGroups.details.forEach(n => setLayerVisible(n, false));
-  }
-
-  // Level 6 (Zoom 17+): Semua detail muncul
-  else if (z >= 17) {
-    // Hide point Kecamatan
-    zoomGroups.point.forEach(n => setLayerVisible(n, false));
-    
-    zoomGroups.boundary.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-    });
-    
-    zoomGroups.desa.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    updateDusunLabels(true);
-    
-    zoomGroups.region.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    
-    zoomGroups.buildings.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-    
-    // Semua details muncul
-    zoomGroups.details.forEach(n => {
-      setLayerVisible(n, isChecked(n));
-      if (isChecked(n)) updateLayerTransparency(n);
-    });
-  }
+  
+  updatePointLabelsVisibility();
 }
 
 map.on('zoomend', applyZoomRendering);
 
-document.querySelectorAll('.layer-item[data-layer] input').forEach(cb=>{
+document.querySelectorAll('.layer-item[data-layer] input').forEach(cb => {
   cb.addEventListener('change', applyZoomRendering);
 });
 
